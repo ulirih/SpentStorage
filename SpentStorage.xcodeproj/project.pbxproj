@@ -13,6 +13,7 @@
 		5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25F29093EB500A2E0DA /* SpentStorage.xcdatamodeld */; };
 		5584A26329093EB600A2E0DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584A26229093EB600A2E0DA /* Assets.xcassets */; };
 		5584A26629093EB600A2E0DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5584A26429093EB600A2E0DA /* LaunchScreen.storyboard */; };
+		5584A272290976A200A2E0DA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A271290976A200A2E0DA /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		5584A26229093EB600A2E0DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5584A26529093EB600A2E0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5584A26729093EB600A2E0DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5584A271290976A200A2E0DA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				5584A26E290942D900A2E0DA /* Resources */,
 				5584A26D2909426C00A2E0DA /* Application */,
 				5584A25A29093EB500A2E0DA /* ViewController.swift */,
+				5584A271290976A200A2E0DA /* TabBarController.swift */,
 				5584A26729093EB600A2E0DA /* Info.plist */,
 			);
 			path = SpentStorage;
@@ -172,6 +175,7 @@
 				5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */,
 				5584A25B29093EB500A2E0DA /* ViewController.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,
+				5584A272290976A200A2E0DA /* TabBarController.swift in Sources */,
 				5584A25929093EB500A2E0DA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +320,7 @@
 				DEVELOPMENT_TEAM = XKXAY3E6D2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpentStorage/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Spent Storage";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -344,6 +349,7 @@
 				DEVELOPMENT_TEAM = XKXAY3E6D2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpentStorage/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Spent Storage";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -17,6 +17,7 @@
 		5584A275290A8DA200A2E0DA /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A274290A8DA200A2E0DA /* UIColorExtension.swift */; };
 		5584A277290A95F700A2E0DA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A276290A95F700A2E0DA /* NavigationController.swift */; };
 		5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */; };
+		5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27B290AD16F00A2E0DA /* SpentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		5584A274290A8DA200A2E0DA /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		5584A276290A95F700A2E0DA /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		5584A27B290AD16F00A2E0DA /* SpentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,9 +122,10 @@
 			isa = PBXGroup;
 			children = (
 				5584A25A29093EB500A2E0DA /* DayViewController.swift */,
+				5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */,
+				5584A27B290AD16F00A2E0DA /* SpentViewController.swift */,
 				5584A271290976A200A2E0DA /* TabBarController.swift */,
 				5584A276290A95F700A2E0DA /* NavigationController.swift */,
-				5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */,
 				5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */,
 				5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,

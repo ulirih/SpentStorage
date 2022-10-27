@@ -18,6 +18,22 @@ class DayViewController: UIViewController {
     private func setupNavBar() {
         view.backgroundColor = UIColor().fromHexColor(hex: "#F8F9F9")
         title = Tabs.day.title
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(onPressNavRightItem)
+        )
+    }
+    
+    @objc
+    private func onPressNavRightItem() {
+        let spentVC = SpentViewController()
+        
+        let nav = UINavigationController(rootViewController: spentVC)
+        nav.modalPresentationStyle = .pageSheet
+        
+        present(nav, animated: true, completion: nil)
     }
 }
 

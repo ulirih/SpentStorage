@@ -9,23 +9,29 @@
 /* Begin PBXBuildFile section */
 		5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25629093EB500A2E0DA /* AppDelegate.swift */; };
 		5584A25929093EB500A2E0DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25829093EB500A2E0DA /* SceneDelegate.swift */; };
-		5584A25B29093EB500A2E0DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25A29093EB500A2E0DA /* ViewController.swift */; };
+		5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25A29093EB500A2E0DA /* DayViewController.swift */; };
 		5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25F29093EB500A2E0DA /* SpentStorage.xcdatamodeld */; };
 		5584A26329093EB600A2E0DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5584A26229093EB600A2E0DA /* Assets.xcassets */; };
 		5584A26629093EB600A2E0DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5584A26429093EB600A2E0DA /* LaunchScreen.storyboard */; };
 		5584A272290976A200A2E0DA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A271290976A200A2E0DA /* TabBarController.swift */; };
+		5584A275290A8DA200A2E0DA /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A274290A8DA200A2E0DA /* UIColorExtension.swift */; };
+		5584A277290A95F700A2E0DA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A276290A95F700A2E0DA /* NavigationController.swift */; };
+		5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5584A25329093EB500A2E0DA /* SpentStorage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpentStorage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584A25629093EB500A2E0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5584A25829093EB500A2E0DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5584A25A29093EB500A2E0DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5584A25A29093EB500A2E0DA /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		5584A26029093EB500A2E0DA /* SpentStorage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpentStorage.xcdatamodel; sourceTree = "<group>"; };
 		5584A26229093EB600A2E0DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5584A26529093EB600A2E0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5584A26729093EB600A2E0DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5584A271290976A200A2E0DA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5584A274290A8DA200A2E0DA /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		5584A276290A95F700A2E0DA /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +64,12 @@
 		5584A25529093EB500A2E0DA /* SpentStorage */ = {
 			isa = PBXGroup;
 			children = (
+				5584A273290A8D8200A2E0DA /* Extensions */,
 				5584A2702909431400A2E0DA /* CoreDB */,
 				5584A26F290942F800A2E0DA /* Views */,
+				5584A27A290AA05B00A2E0DA /* Controllers */,
 				5584A26E290942D900A2E0DA /* Resources */,
 				5584A26D2909426C00A2E0DA /* Application */,
-				5584A25A29093EB500A2E0DA /* ViewController.swift */,
-				5584A271290976A200A2E0DA /* TabBarController.swift */,
 				5584A26729093EB600A2E0DA /* Info.plist */,
 			);
 			path = SpentStorage;
@@ -100,6 +106,25 @@
 				5584A25F29093EB500A2E0DA /* SpentStorage.xcdatamodeld */,
 			);
 			path = CoreDB;
+			sourceTree = "<group>";
+		};
+		5584A273290A8D8200A2E0DA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5584A274290A8DA200A2E0DA /* UIColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5584A27A290AA05B00A2E0DA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5584A25A29093EB500A2E0DA /* DayViewController.swift */,
+				5584A271290976A200A2E0DA /* TabBarController.swift */,
+				5584A276290A95F700A2E0DA /* NavigationController.swift */,
+				5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,10 +198,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */,
-				5584A25B29093EB500A2E0DA /* ViewController.swift in Sources */,
+				5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,
+				5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */,
 				5584A272290976A200A2E0DA /* TabBarController.swift in Sources */,
 				5584A25929093EB500A2E0DA /* SceneDelegate.swift in Sources */,
+				5584A277290A95F700A2E0DA /* NavigationController.swift in Sources */,
+				5584A275290A8DA200A2E0DA /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

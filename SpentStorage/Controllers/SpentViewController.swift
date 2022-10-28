@@ -56,7 +56,6 @@ class SpentViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = doneButton
         
         title = "Add"
-        view.backgroundColor = Colors.backgroundColor
     }
     
     @objc

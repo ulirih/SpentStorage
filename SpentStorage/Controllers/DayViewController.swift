@@ -30,7 +30,7 @@ class DayViewController: UIViewController {
     private func onPressNavRightItem() {
         let spentVC = SpentViewController()
         
-        let nav = UINavigationController(rootViewController: spentVC)
+        let nav = NavigationController(rootViewController: spentVC)
         nav.modalPresentationStyle = .pageSheet
         
         present(nav, animated: true, completion: nil)

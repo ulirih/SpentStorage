@@ -16,7 +16,7 @@ class DayViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor().fromHexColor(hex: "#F8F9F9")
+        view.backgroundColor = Colors.backgroundColor
         title = Tabs.day.title
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(

@@ -16,7 +16,7 @@ class StatisticsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        view.backgroundColor = UIColor().fromHexColor(hex: "#F8F9F9")
+        view.backgroundColor = Colors.backgroundColor
         title = Tabs.statistics.title
     }
 }

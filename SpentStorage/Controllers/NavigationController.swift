@@ -19,7 +19,7 @@ class NavigationController: UINavigationController {
         navigationBar.isTranslucent = false
         view.backgroundColor = .white
         navigationBar.standardAppearance.titleTextAttributes = [
-            .foregroundColor: UIColor().fromHexColor(hex: "#545C77"),
+            .foregroundColor: UIColor.fromHexColor(hex: "#545C77"),
             .font: UIFont(name: "Helvetica", size: 17) ?? UIFont()
         ]
     }

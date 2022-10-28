@@ -18,6 +18,7 @@
 		5584A277290A95F700A2E0DA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A276290A95F700A2E0DA /* NavigationController.swift */; };
 		5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */; };
 		5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27B290AD16F00A2E0DA /* SpentViewController.swift */; };
+		5584A27E290C400D00A2E0DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27D290C400D00A2E0DA /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		5584A276290A95F700A2E0DA /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		5584A27B290AD16F00A2E0DA /* SpentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpentViewController.swift; sourceTree = "<group>"; };
+		5584A27D290C400D00A2E0DA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				5584A26229093EB600A2E0DA /* Assets.xcassets */,
+				5584A27D290C400D00A2E0DA /* Colors.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */,
+				5584A27E290C400D00A2E0DA /* Colors.swift in Sources */,
 				5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */,
 				5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,
@@ -358,6 +362,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,6 +392,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

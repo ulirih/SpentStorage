@@ -42,8 +42,8 @@ class TabBarController: UITabBarController {
     
     private func setup() {
         tabBar.backgroundColor = .white
-        tabBar.tintColor = UIColor().fromHexColor(hex: "#437BFE")
-        tabBar.unselectedItemTintColor = UIColor().fromHexColor(hex: "#929DA5")
+        tabBar.tintColor = Colors.activeTabColor
+        tabBar.unselectedItemTintColor = Colors.inactiveTabColor
         tabBar.layer.borderWidth = 0.5
         tabBar.layer.borderColor = UIColor.lightGray.cgColor
         tabBar.clipsToBounds = true

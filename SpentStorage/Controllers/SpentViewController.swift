@@ -56,8 +56,7 @@ class SpentViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = doneButton
         
         title = "Add"
-        // TODO: refactor to single resource
-        view.backgroundColor = UIColor().fromHexColor(hex: "#F8F9F9")
+        view.backgroundColor = Colors.backgroundColor
     }
     
     @objc
@@ -84,7 +83,7 @@ class SpentViewController: UIViewController {
     
     private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
-        picker.date = Date.now
+        picker.date = Date()
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
@@ -96,8 +95,10 @@ class SpentViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Save", for: .normal)
-        button.setTitleColor(UIColor().fromHexColor(hex: "#437BFE"), for: .normal)
-        button.setTitleColor(UIColor().fromHexColor(hex: "#437BFE", alpha: 0.5), for: .highlighted)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
+        button.backgroundColor = Colors.buttonBackgroundColor
+        button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(onPressSave), for: .touchUpInside)
      
         return button

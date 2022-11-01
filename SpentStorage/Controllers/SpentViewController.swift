@@ -9,8 +9,9 @@ import UIKit
 
 class SpentViewController: UIViewController {
     
-    let service: SpentServiceProtocol = SpentService()
-    var categories: [CategoryModel] = []
+    private let service: SpentServiceProtocol = SpentService()
+    private var categories: [CategoryModel] = []
+    private let reuseIdentifier = "CategoryCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,15 +19,16 @@ class SpentViewController: UIViewController {
         setupNavBar()
         setupLayout()
         setupConstrains()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         categories = service.getCategories()
+        if categories.isEmpty {
+            service.addDefaultCategories()
+            categories = service.getCategories()
+        }
         tableView.reloadData()
     }
     
@@ -34,7 +36,15 @@ class SpentViewController: UIViewController {
         view.addSubview(priceTextField)
         view.addSubview(datePicker)
         view.addSubview(saveButton)
+        
         view.addSubview(tableView)
+        setupTableView()
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
     private func setupConstrains() {
@@ -131,6 +141,11 @@ extension SpentViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        var cellConfig = cell.defaultContentConfiguration()
+        cellConfig.text = categories[indexPath.row].name
+        cell.contentConfiguration = cellConfig
+        
+        return cell
     }
 }

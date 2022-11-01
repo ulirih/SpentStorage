@@ -12,6 +12,8 @@
 		554B0F9529112C8200B8539B /* SpentEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554B0F9129112C8200B8539B /* SpentEntity+CoreDataClass.swift */; };
 		554B0F9629112C8200B8539B /* SpentEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554B0F9229112C8200B8539B /* SpentEntity+CoreDataProperties.swift */; };
 		554B0F982911321200B8539B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554B0F972911321200B8539B /* CoreDataManager.swift */; };
+		554B0F9B2911354300B8539B /* SpentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554B0F9A2911354300B8539B /* SpentService.swift */; };
+		554B0F9E291135A800B8539B /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554B0F9D291135A800B8539B /* CategoryModel.swift */; };
 		5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25629093EB500A2E0DA /* AppDelegate.swift */; };
 		5584A25929093EB500A2E0DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25829093EB500A2E0DA /* SceneDelegate.swift */; };
 		5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A25A29093EB500A2E0DA /* DayViewController.swift */; };
@@ -32,6 +34,8 @@
 		554B0F9129112C8200B8539B /* SpentEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpentEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		554B0F9229112C8200B8539B /* SpentEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpentEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		554B0F972911321200B8539B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		554B0F9A2911354300B8539B /* SpentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpentService.swift; sourceTree = "<group>"; };
+		554B0F9D291135A800B8539B /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		5584A25329093EB500A2E0DA /* SpentStorage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpentStorage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5584A25629093EB500A2E0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5584A25829093EB500A2E0DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		554B0F992911351D00B8539B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				554B0F9A2911354300B8539B /* SpentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		554B0F9C2911358500B8539B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				554B0F9D291135A800B8539B /* CategoryModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5584A24A29093EB500A2E0DA = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +98,8 @@
 		5584A25529093EB500A2E0DA /* SpentStorage */ = {
 			isa = PBXGroup;
 			children = (
+				554B0F9C2911358500B8539B /* Models */,
+				554B0F992911351D00B8539B /* Services */,
 				5584A273290A8D8200A2E0DA /* Extensions */,
 				5584A2702909431400A2E0DA /* CoreDB */,
 				5584A26F290942F800A2E0DA /* Views */,
@@ -222,10 +244,12 @@
 				5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */,
 				5584A27E290C400D00A2E0DA /* Colors.swift in Sources */,
 				554B0F982911321200B8539B /* CoreDataManager.swift in Sources */,
+				554B0F9E291135A800B8539B /* CategoryModel.swift in Sources */,
 				5584A26129093EB500A2E0DA /* SpentStorage.xcdatamodeld in Sources */,
 				5584A25B29093EB500A2E0DA /* DayViewController.swift in Sources */,
 				554B0F9629112C8200B8539B /* SpentEntity+CoreDataProperties.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,
+				554B0F9B2911354300B8539B /* SpentService.swift in Sources */,
 				554B0F9329112C8200B8539B /* CategoryEntity+CoreDataClass.swift in Sources */,
 				5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */,
 				554B0F9529112C8200B8539B /* SpentEntity+CoreDataClass.swift in Sources */,

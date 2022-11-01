@@ -8,6 +8,9 @@
 import UIKit
 
 class SpentViewController: UIViewController {
+    
+    let service: SpentServiceProtocol = SpentService()
+    var categories: [CategoryModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,13 @@ class SpentViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        categories = service.getCategories()
+        tableView.reloadData()
     }
     
     private func setupLayout() {
@@ -117,7 +127,7 @@ class SpentViewController: UIViewController {
 extension SpentViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

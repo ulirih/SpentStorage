@@ -16,10 +16,10 @@ extension SpentEntity {
         return NSFetchRequest<SpentEntity>(entityName: "SpentEntity")
     }
 
-    @NSManaged public var date: Date?
-    @NSManaged public var id: UUID?
+    @NSManaged public var date: Date
+    @NSManaged public var id: UUID
     @NSManaged public var price: Float
-    @NSManaged public var type: CategoryEntity?
+    @NSManaged public var type: CategoryEntity
 
 }
 

@@ -85,7 +85,20 @@ class SpentViewController: UIViewController {
     
     @objc
     private func onPressSave() {
-        print("add save to db")
+        let selectedRow = tableView.indexPathForSelectedRow
+        if selectedRow == nil || (priceTextField.text?.isEmpty ?? true) || Float(priceTextField.text!) == nil {
+            return
+        }
+        
+        let spent = SpentModel(
+            id: UUID(),
+            date: datePicker.date,
+            price: Float(priceTextField.text!)!,
+            type: categories[selectedRow!.row]
+        )
+        
+        service.addSpent(spent)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: views

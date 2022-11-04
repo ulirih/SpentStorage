@@ -37,7 +37,7 @@ class CoreDataManager {
     
     func getData(entityName: String) throws -> [NSManagedObject] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        let entities = try container.viewContext.fetch(fetchRequest)
+        let entities = try context.fetch(fetchRequest)
         
         return entities
         
@@ -46,7 +46,7 @@ class CoreDataManager {
     func getData(entityName: String, predicate: NSPredicate) throws -> [NSManagedObject] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = predicate
-        let entities = try container.viewContext.fetch(fetchRequest)
+        let entities = try context.fetch(fetchRequest)
         
         return entities
     }
@@ -55,7 +55,7 @@ class CoreDataManager {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sort
-        let entities = try container.viewContext.fetch(fetchRequest)
+        let entities = try context.fetch(fetchRequest)
         
         return entities
     }

@@ -21,7 +21,6 @@ protocol SpentServiceProtocol {
 class SpentService: SpentServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
-    private var categoriesEntity: [CategoryEntity] = []
     
     func getCategories() -> [CategoryModel] {
         do {

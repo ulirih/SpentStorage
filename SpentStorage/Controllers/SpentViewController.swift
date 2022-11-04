@@ -9,23 +9,25 @@ import UIKit
 
 class SpentViewController: UIViewController {
     
-    private let service: SpentServiceProtocol = SpentService()
+    public var didDissmisController: (() -> Void)?
+    
+    private let viewPresenter: SpentViewPresenter = SpentViewPresenter(service: SpentService())
     private var categories: [CategoryModel] = []
     private let reuseIdentifier = "CategoryCell"
-
+    
+    deinit {
+        print("Deinit SpentVC")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupNavBar()
         setupLayout()
         setupConstrains()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        categories = service.getCategories()
-        tableView.reloadData()
+        viewPresenter.delegate = self
+        viewPresenter.fetchCategories()
     }
     
     private func setupLayout() {
@@ -86,15 +88,7 @@ class SpentViewController: UIViewController {
             return
         }
         
-        let spent = SpentModel(
-            id: UUID(),
-            date: datePicker.date,
-            price: Float(priceTextField.text!)!,
-            type: categories[selectedRow!.row]
-        )
-        
-        service.addSpent(spent)
-        dismiss(animated: true, completion: nil)
+        viewPresenter.addSpent(price: Float(priceTextField.text!)!, date: datePicker.date, type: categories[selectedRow!.row])
     }
     
     // MARK: views
@@ -139,6 +133,24 @@ class SpentViewController: UIViewController {
         return table
     }()
 
+}
+
+
+// MARK: Presenter Delegate
+extension SpentViewController: SpentViewPresenterDelegate {
+    func presentCategories(categories: [CategoryModel]) {
+        self.categories = categories
+        tableView.reloadData()
+    }
+    
+    func onSpentSaved() {
+        dismiss(animated: true) { [weak self] in
+            self?.didDissmisController?()
+        }
+    }
+    
+    func showError(error: Error) {
+    }
 }
 
 

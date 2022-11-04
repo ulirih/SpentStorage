@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SpentViewPresenterDelegate {
+protocol SpentViewPresenterDelegate: AnyObject {
     func presentCategories(categories: [CategoryModel]) -> Void
     func onSpentSaved() -> Void
     func showError(error: Error) -> Void
@@ -15,7 +15,7 @@ protocol SpentViewPresenterDelegate {
 
 class SpentViewPresenter {
     
-    public var delegate: SpentViewPresenterDelegate?
+    weak var delegate: SpentViewPresenterDelegate?
     private let service: SpentServiceProtocol
     
     init(service: SpentServiceProtocol) {

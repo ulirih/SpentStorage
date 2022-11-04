@@ -9,15 +9,11 @@ import UIKit
 
 class SpentViewController: UIViewController {
     
-    public var didDissmisController: (() -> Void)?
+    var didDissmisController: (() -> Void)?
     
     private let viewPresenter: SpentViewPresenter = SpentViewPresenter(service: SpentService())
     private var categories: [CategoryModel] = []
     private let reuseIdentifier = "CategoryCell"
-    
-    deinit {
-        print("Deinit SpentVC")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

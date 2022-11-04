@@ -34,4 +34,29 @@ class CoreDataManager {
             try container.viewContext.save()
         }
     }
+    
+    func getData(entityName: String) throws -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        let entities = try container.viewContext.fetch(fetchRequest)
+        
+        return entities
+        
+    }
+    
+    func getData(entityName: String, predicate: NSPredicate) throws -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        let entities = try container.viewContext.fetch(fetchRequest)
+        
+        return entities
+    }
+    
+    func getData(entityName: String, predicate: NSPredicate?, sort: [NSSortDescriptor]?) throws -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sort
+        let entities = try container.viewContext.fetch(fetchRequest)
+        
+        return entities
+    }
 }

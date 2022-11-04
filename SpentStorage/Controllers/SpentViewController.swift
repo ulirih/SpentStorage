@@ -25,10 +25,6 @@ class SpentViewController: UIViewController {
         super.viewDidAppear(animated)
         
         categories = service.getCategories()
-        if categories.isEmpty {
-            service.addDefaultCategories()
-            categories = service.getCategories()
-        }
         tableView.reloadData()
     }
     

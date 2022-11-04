@@ -21,15 +21,14 @@ protocol SpentServiceProtocol {
 class SpentService: SpentServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
+    private var categoriesEntity: [CategoryEntity] = []
     
     func getCategories() -> [CategoryModel] {
-        let request: NSFetchRequest<CategoryEntity> = CategoryEntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
         do {
-            let result = try dbManager.context.fetch(request)
+            let sort = [NSSortDescriptor(key: "name", ascending: true)]
+            let result = try dbManager.getData(entityName: String(describing: CategoryEntity.self), predicate: nil, sort: sort) as? [CategoryEntity]
 
-            return result.map { CategoryModel(id: $0.id, name: $0.name) }
+            return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
         } catch let error {
             print(error.localizedDescription)
             return []
@@ -37,18 +36,16 @@ class SpentService: SpentServiceProtocol {
     }
     
     func addCategory(for category: CategoryModel) {
-        dbManager.context.insert(categoryToEntity(category: category))
+        dbManager.context.insert(categoryModelToEntity(category: category))
         try? dbManager.save()
     }
     
     func getSpents() -> [SpentModel] {
-        let request: NSFetchRequest<SpentEntity> = SpentEntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
-        
         do {
-            let result = try dbManager.context.fetch(request)
+            let sort = [NSSortDescriptor(key: "date", ascending: true)]
+            let result = try dbManager.getData(entityName: String(describing: SpentEntity.self), predicate: nil, sort: sort) as? [SpentEntity]
 
-            return result.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) }
+            return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []
         } catch let error {
             print(error.localizedDescription)
             return []
@@ -56,14 +53,15 @@ class SpentService: SpentServiceProtocol {
     }
     
     func addSpent(_ spent: SpentModel) {
-        dbManager.context.insert(spentToEntity(spent: spent))
-        try? dbManager.save()
+        if let entity = spentModelToEntity(spent: spent) {
+            dbManager.context.insert(entity)
+            try? dbManager.save()
+        }
     }
 }
 
 extension SpentService {
-    
-    private func categoryToEntity(category model: CategoryModel) -> CategoryEntity {
+    private func categoryModelToEntity(category model: CategoryModel) -> CategoryEntity {
         let category = CategoryEntity(context: dbManager.context)
         category.id = model.id
         category.name = model.name
@@ -71,12 +69,21 @@ extension SpentService {
         return category
     }
     
-    private func spentToEntity(spent model: SpentModel) -> SpentEntity {
+    private func spentModelToEntity(spent model: SpentModel) -> SpentEntity? {
+        let predicate = NSPredicate(format: "id == %@", model.type.id.uuidString)
+        let categories = try? dbManager.getData(
+            entityName: String(describing: SpentEntity.self),
+            predicate: predicate,
+            sort: nil
+        ) as? [CategoryEntity]
+        
+        guard let category = categories?.first else { return nil }
+        
         let entity = SpentEntity(context: dbManager.context)
         entity.id = model.id
         entity.date = model.date
         entity.price = model.price
-        entity.type = categoryToEntity(category: model.type)
+        entity.type = category
         
         return entity
     }
@@ -96,7 +103,7 @@ extension SpentService {
             CategoryModel(id: UUID(), name: "Стк"),
         ]
         
-        data.forEach { dbManager.context.insert(categoryToEntity(category: $0)) }
+        data.forEach { dbManager.context.insert(categoryModelToEntity(category: $0)) }
         try? dbManager.save()
     }
 }

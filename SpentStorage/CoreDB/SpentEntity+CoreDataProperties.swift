@@ -2,7 +2,7 @@
 //  SpentEntity+CoreDataProperties.swift
 //  SpentStorage
 //
-//  Created by andrey perevedniuk on 01.11.2022.
+//  Created by andrey perevedniuk on 04.11.2022.
 //
 //
 

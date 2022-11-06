@@ -145,7 +145,8 @@ extension SpentViewController: SpentViewPresenterDelegate {
         }
     }
     
-    func showError(error: Error) {
+    func showError(errorMessage: String) {
+        showAlertError(message: errorMessage)
     }
 }
 

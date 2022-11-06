@@ -10,31 +10,40 @@ import Foundation
 protocol SpentViewPresenterDelegate: AnyObject {
     func presentCategories(categories: [CategoryModel]) -> Void
     func onSpentSaved() -> Void
-    func showError(error: Error) -> Void
+    func showError(errorMessage: String) -> Void
 }
 
 class SpentViewPresenter {
-    
     weak var delegate: SpentViewPresenterDelegate?
+    
     private let service: SpentServiceProtocol
+    private let defaultError = "Something went wrong"
     
     init(service: SpentServiceProtocol) {
         self.service = service
     }
     
     func fetchCategories() {
-        let result = service.getCategories()
-        delegate?.presentCategories(categories: result)
+        do {
+            let result = try service.getCategories()
+            delegate?.presentCategories(categories: result)
+        } catch {
+            delegate?.showError(errorMessage: defaultError)
+        }
     }
     
     func addSpent(price: Float, date: Date, type: CategoryModel) {
-        let spent = SpentModel(
-            id: UUID(),
-            date: date,
-            price: price,
-            type: type
-        )
-        service.addSpent(spent)
-        delegate?.onSpentSaved()
+        do {
+            let spent = SpentModel(
+                id: UUID(),
+                date: date,
+                price: price,
+                type: type
+            )
+            try service.addSpent(spent)
+            delegate?.onSpentSaved()
+        } catch {
+            delegate?.showError(errorMessage: defaultError)
+        }
     }
 }

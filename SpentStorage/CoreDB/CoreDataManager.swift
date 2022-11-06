@@ -30,7 +30,7 @@ class CoreDataManager {
     }
     
     func save() throws {
-        if(container.viewContext.hasChanges){
+        if container.viewContext.hasChanges {
             try container.viewContext.save()
         }
     }

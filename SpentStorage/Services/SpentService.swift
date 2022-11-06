@@ -8,11 +8,16 @@
 import Foundation
 import CoreData
 
+enum ServiceError: Error {
+    case DBError
+    case UndefinedCategoryError
+}
+
 protocol SpentServiceProtocol {
-    func getCategories() -> [CategoryModel]
-    func addCategory(for category: CategoryModel) -> Void
-    func addSpent(_ spent: SpentModel) -> Void
-    func getSpents() -> [SpentModel]
+    func getCategories() throws -> [CategoryModel]
+    func addCategory(for category: CategoryModel) throws -> Void
+    func addSpent(_ spent: SpentModel) throws -> Void
+    func getSpents() throws -> [SpentModel]
 
     // TODO: will move to settings
     func addDefaultCategories() -> Void
@@ -22,40 +27,29 @@ class SpentService: SpentServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
     
-    func getCategories() -> [CategoryModel] {
-        do {
-            let sort = [NSSortDescriptor(key: "name", ascending: true)]
-            let result = try dbManager.getData(entityName: String(describing: CategoryEntity.self), predicate: nil, sort: sort) as? [CategoryEntity]
-
-            return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
-        } catch let error {
-            print(error.localizedDescription)
-            return []
-        }
+    func getCategories() throws -> [CategoryModel] {
+        let sort = [NSSortDescriptor(key: "name", ascending: true)]
+        let result = try dbManager.getData(entityName: String(describing: CategoryEntity.self), predicate: nil, sort: sort) as? [CategoryEntity]
+        
+        return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
     }
     
-    func addCategory(for category: CategoryModel) {
+    func addCategory(for category: CategoryModel) throws {
         dbManager.context.insert(categoryModelToEntity(category: category))
-        try? dbManager.save()
+        try dbManager.save()
     }
     
-    func getSpents() -> [SpentModel] {
-        do {
-            let sort = [NSSortDescriptor(key: "date", ascending: true)]
-            let result = try dbManager.getData(entityName: String(describing: SpentEntity.self), predicate: nil, sort: sort) as? [SpentEntity]
-
-            return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []
-        } catch let error {
-            print(error.localizedDescription)
-            return []
-        }
+    func getSpents() throws -> [SpentModel] {
+        let sort = [NSSortDescriptor(key: "date", ascending: true)]
+        let result = try dbManager.getData(entityName: String(describing: SpentEntity.self), predicate: nil, sort: sort) as? [SpentEntity]
+        
+        return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []
     }
     
-    func addSpent(_ spent: SpentModel) {
-        if let entity = spentModelToEntity(spent: spent) {
-            dbManager.context.insert(entity)
-            try? dbManager.save()
-        }
+    func addSpent(_ spent: SpentModel) throws {
+        let entity = try spentModelToEntity(spent: spent)
+        dbManager.context.insert(entity)
+        try dbManager.save()
     }
 }
 
@@ -68,7 +62,7 @@ extension SpentService {
         return category
     }
     
-    private func spentModelToEntity(spent model: SpentModel) -> SpentEntity? {
+    private func spentModelToEntity(spent model: SpentModel) throws -> SpentEntity {
         let predicate = NSPredicate(format: "id == %@", model.type.id.uuidString)
         let categories = try? dbManager.getData(
             entityName: String(describing: SpentEntity.self),
@@ -76,7 +70,7 @@ extension SpentService {
             sort: nil
         ) as? [CategoryEntity]
         
-        guard let category = categories?.first else { return nil }
+        guard let category = categories?.first else { throw ServiceError.UndefinedCategoryError }
         
         let entity = SpentEntity(context: dbManager.context)
         entity.id = model.id

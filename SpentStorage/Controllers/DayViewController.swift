@@ -13,6 +13,8 @@ class DayViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavBar()
+        setupLayout()
+        setupConstrains()
     }
     
     private func setupNavBar() {
@@ -25,6 +27,81 @@ class DayViewController: UIViewController {
             action: #selector(onPressNavRightItem)
         )
     }
+    
+    private func setupLayout() {
+        headerView.addSubview(balanceLabel)
+        headerView.addSubview(previousDateButton)
+        headerView.addSubview(nextDateButton)
+        view.addSubview(headerView)
+        
+        view.addSubview(tableView)
+    }
+    
+    private func setupConstrains() {
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            headerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            headerView.heightAnchor.constraint(equalToConstant: 120),
+            
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            balanceLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            balanceLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            
+            previousDateButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            previousDateButton.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            previousDateButton.heightAnchor.constraint(equalToConstant: 40),
+            previousDateButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            nextDateButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            nextDateButton.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            nextDateButton.heightAnchor.constraint(equalToConstant: 40),
+            nextDateButton.widthAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
+    // MARK: Views
+    private let headerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        
+        return table
+    }()
+    
+    private let balanceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Verdana", size: 32)
+        
+        return label
+    }()
+    
+    private let previousDateButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        
+        return button
+    }()
+    
+    private let nextDateButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        
+        return button
+    }()
     
     @objc
     private func onPressNavRightItem() {

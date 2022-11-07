@@ -40,7 +40,7 @@ class SpentViewPresenter {
                 price: price,
                 type: type
             )
-            try service.addSpent(spent)
+            try service.addSpent(for: spent)
             delegate?.onSpentSaved()
         } catch {
             delegate?.showError(errorMessage: defaultError)

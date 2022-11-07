@@ -16,7 +16,7 @@ enum ServiceError: Error {
 protocol SpentServiceProtocol {
     func getCategories() throws -> [CategoryModel]
     func addCategory(for category: CategoryModel) throws -> Void
-    func addSpent(_ spent: SpentModel) throws -> Void
+    func addSpent(for spent: SpentModel) throws -> Void
     func getSpents() throws -> [SpentModel]
 
     // TODO: will move to settings
@@ -29,7 +29,11 @@ class SpentService: SpentServiceProtocol {
     
     func getCategories() throws -> [CategoryModel] {
         let sort = [NSSortDescriptor(key: "name", ascending: true)]
-        let result = try dbManager.getData(entityName: String(describing: CategoryEntity.self), predicate: nil, sort: sort) as? [CategoryEntity]
+        let result = try dbManager.getData(
+            entityName: String(describing: CategoryEntity.self),
+            predicate: nil,
+            sort: sort
+        ) as? [CategoryEntity]
         
         return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
     }
@@ -41,12 +45,16 @@ class SpentService: SpentServiceProtocol {
     
     func getSpents() throws -> [SpentModel] {
         let sort = [NSSortDescriptor(key: "date", ascending: true)]
-        let result = try dbManager.getData(entityName: String(describing: SpentEntity.self), predicate: nil, sort: sort) as? [SpentEntity]
+        let result = try dbManager.getData(
+            entityName: String(describing: SpentEntity.self),
+            predicate: nil,
+            sort: sort
+        ) as? [SpentEntity]
         
         return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []
     }
     
-    func addSpent(_ spent: SpentModel) throws {
+    func addSpent(for spent: SpentModel) throws {
         let entity = try spentModelToEntity(spent: spent)
         dbManager.context.insert(entity)
         try dbManager.save()

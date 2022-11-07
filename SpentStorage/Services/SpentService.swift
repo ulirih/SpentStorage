@@ -17,7 +17,7 @@ protocol SpentServiceProtocol {
     func getCategories() throws -> [CategoryModel]
     func addCategory(for category: CategoryModel) throws -> Void
     func addSpent(for spent: SpentModel) throws -> Void
-    func getSpents() throws -> [SpentModel]
+    func getSpents(on date: Date) throws -> [SpentModel]
 
     // TODO: will move to settings
     func addDefaultCategories() -> Void
@@ -43,11 +43,14 @@ class SpentService: SpentServiceProtocol {
         try dbManager.save()
     }
     
-    func getSpents() throws -> [SpentModel] {
+    func getSpents(on date: Date) throws -> [SpentModel] {
+        let predicate = NSPredicate(format: "date >= %@ and date <= %@", Calendar.current.startOfDay(for: date) as CVarArg, Calendar.current.startOfDay(for: date).addingTimeInterval(86400.0) as CVarArg)
+        
         let sort = [NSSortDescriptor(key: "date", ascending: true)]
+        
         let result = try dbManager.getData(
             entityName: String(describing: SpentEntity.self),
-            predicate: nil,
+            predicate: predicate,
             sort: sort
         ) as? [SpentEntity]
         
@@ -73,7 +76,7 @@ extension SpentService {
     private func spentModelToEntity(spent model: SpentModel) throws -> SpentEntity {
         let predicate = NSPredicate(format: "id == %@", model.type.id.uuidString)
         let categories = try? dbManager.getData(
-            entityName: String(describing: SpentEntity.self),
+            entityName: String(describing: CategoryEntity.self),
             predicate: predicate,
             sort: nil
         ) as? [CategoryEntity]

@@ -8,6 +8,8 @@
 import UIKit
 
 class DayViewController: UIViewController {
+    
+    private let presenter = DayViewPresenter(service: SpentService())
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,6 +17,14 @@ class DayViewController: UIViewController {
         setupNavBar()
         setupLayout()
         setupConstrains()
+        
+        presenter.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.fetch(on: Date())
     }
     
     private func setupNavBar() {
@@ -29,7 +39,7 @@ class DayViewController: UIViewController {
     }
     
     private func setupLayout() {
-        headerView.addSubview(balanceLabel)
+        headerView.addSubview(sumLabel)
         headerView.addSubview(previousDateButton)
         headerView.addSubview(nextDateButton)
         view.addSubview(headerView)
@@ -49,8 +59,8 @@ class DayViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            balanceLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            balanceLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            sumLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            sumLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             
             previousDateButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             previousDateButton.leftAnchor.constraint(equalTo: headerView.leftAnchor),
@@ -79,7 +89,7 @@ class DayViewController: UIViewController {
         return table
     }()
     
-    private let balanceLabel: UILabel = {
+    private let sumLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Verdana", size: 32)
@@ -114,3 +124,22 @@ class DayViewController: UIViewController {
     }
 }
 
+// MARK: Presenter Delegate
+extension DayViewController: DayViewPresenterDelegate {
+    
+    func presentSpents(data: [SpentModel]) {
+        print(data)
+    }
+    
+    func presentSum(sum: Float) {
+        sumLabel.text = String(sum)
+    }
+    
+    func presentDate(date: Date) {
+        
+    }
+    
+    func showError(errorMessage: String) {
+        showAlertError(message: errorMessage)
+    }
+}

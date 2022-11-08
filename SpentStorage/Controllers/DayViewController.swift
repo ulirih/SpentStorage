@@ -21,7 +21,7 @@ class DayViewController: UIViewController {
         presenter.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         presenter.fetch(on: Date())
@@ -96,7 +96,7 @@ class DayViewController: UIViewController {
     private let sumLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Helvetica", size: 32)
+        label.font = UIFont.getHelveticFont(size: 32)
         
         return label
     }()
@@ -104,7 +104,7 @@ class DayViewController: UIViewController {
     private let dateLabel: UILabel = {
         let date = UILabel()
         date.translatesAutoresizingMaskIntoConstraints = false
-        date.font = UIFont(name: "Helvetica", size: 16)
+        date.font = UIFont.getHelveticFont()
         date.textColor = Colors.navigationBarTitleColor
         
         return date
@@ -163,7 +163,7 @@ extension DayViewController: DayViewPresenterDelegate {
     func presentDate(date: Date) {
         let isToday = Calendar.current.isDateInToday(date)
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.nextDateButton.alpha = isToday ? 0 : 1
         }
 

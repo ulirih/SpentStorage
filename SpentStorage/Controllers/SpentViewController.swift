@@ -28,9 +28,11 @@ class SpentViewController: UIViewController {
     
     private func setupLayout() {
         view.addSubview(priceTextField)
-        view.addSubview(datePicker)
         view.addSubview(saveButton)
         
+        datePickerContainer.addArrangedSubview(datePicker)
+        view.addSubview(datePickerContainer)
+
         view.addSubview(tableView)
         setupTableView()
     }
@@ -47,10 +49,12 @@ class SpentViewController: UIViewController {
             priceTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             priceTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            datePicker.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 32),
-            datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            datePickerContainer.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 16),
+            datePickerContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            datePickerContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            datePickerContainer.heightAnchor.constraint(equalToConstant: 34),
             
-            tableView.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 32),
+            tableView.topAnchor.constraint(equalTo: datePickerContainer.bottomAnchor, constant: 16),
             tableView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -16),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -109,10 +113,26 @@ class SpentViewController: UIViewController {
         return picker
     }()
     
+    private let datePickerContainer: UIStackView = {
+        let container = UIStackView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.axis = .horizontal
+        container.distribution = .fill
+        
+        let label = UILabel()
+        label.text = "Date"
+        label.font = UIFont.getHelveticFont()
+        label.textColor = Colors.navigationBarTitleColor
+        container.addArrangedSubview(label)
+        
+        return container
+    }()
+    
     private let saveButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Save", for: .normal)
+        button.titleLabel?.font = UIFont.getHelveticFont(size: 18)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         button.backgroundColor = Colors.buttonBackgroundColor
@@ -162,6 +182,7 @@ extension SpentViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         var cellConfig = cell.defaultContentConfiguration()
         cellConfig.text = categories[indexPath.row].name
+        cellConfig.textProperties.font = UIFont.getHelveticFont()
         cell.contentConfiguration = cellConfig
         
         return cell

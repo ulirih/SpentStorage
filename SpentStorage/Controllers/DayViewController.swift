@@ -42,8 +42,9 @@ class DayViewController: UIViewController {
         headerView.addSubview(sumLabel)
         headerView.addSubview(previousDateButton)
         headerView.addSubview(nextDateButton)
-        view.addSubview(headerView)
+        headerView.addSubview(dateLabel)
         
+        view.addSubview(headerView)
         view.addSubview(tableView)
     }
     
@@ -61,6 +62,9 @@ class DayViewController: UIViewController {
             
             sumLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
             sumLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            
+            dateLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            dateLabel.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 16),
             
             previousDateButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             previousDateButton.leftAnchor.constraint(equalTo: headerView.leftAnchor),
@@ -92,15 +96,25 @@ class DayViewController: UIViewController {
     private let sumLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Verdana", size: 32)
+        label.font = UIFont(name: "Helvetica", size: 32)
         
         return label
+    }()
+    
+    private let dateLabel: UILabel = {
+        let date = UILabel()
+        date.translatesAutoresizingMaskIntoConstraints = false
+        date.font = UIFont(name: "Helvetica", size: 16)
+        date.textColor = Colors.navigationBarTitleColor
+        
+        return date
     }()
     
     private let previousDateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.addTarget(self, action: #selector(didPressPreviousButton), for: .touchUpInside)
         
         return button
     }()
@@ -109,6 +123,7 @@ class DayViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.addTarget(self, action: #selector(didPressNextButton), for: .touchUpInside)
         
         return button
     }()
@@ -122,6 +137,16 @@ class DayViewController: UIViewController {
         
         present(nav, animated: true, completion: nil)
     }
+    
+    @objc
+    private func didPressPreviousButton() {
+        presenter.onDayStepFetch(step: .previousDay)
+    }
+    
+    @objc
+    private func didPressNextButton() {
+        presenter.onDayStepFetch(step: .nextDay)
+    }
 }
 
 // MARK: Presenter Delegate
@@ -132,11 +157,19 @@ extension DayViewController: DayViewPresenterDelegate {
     }
     
     func presentSum(sum: Float) {
-        sumLabel.text = String(sum)
+        sumLabel.text = sum.toFormattedString()
     }
     
     func presentDate(date: Date) {
+        let isToday = Calendar.current.isDateInToday(date)
         
+        UIView.animate(withDuration: 0.5) {
+            self.nextDateButton.alpha = isToday ? 0 : 1
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM YYYY"
+        dateLabel.text = formatter.string(from: date)
     }
     
     func showError(errorMessage: String) {

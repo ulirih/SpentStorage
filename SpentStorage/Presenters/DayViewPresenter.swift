@@ -14,6 +14,11 @@ protocol DayViewPresenterDelegate: AnyObject {
     func showError(errorMessage: String) -> Void
 }
 
+enum DayStepType: Int {
+    case nextDay = 1
+    case previousDay = -1
+}
+
 class DayViewPresenter {
     weak var delegate: DayViewPresenterDelegate?
     
@@ -33,8 +38,17 @@ class DayViewPresenter {
             
             delegate?.presentSpents(data: result)
             delegate?.presentSum(sum: getSum(for: result))
+            delegate?.presentDate(date: currentDate)
         } catch {
             delegate?.showError(errorMessage: defaultError)
+        }
+    }
+    
+    func onDayStepFetch(step: DayStepType) {
+        let newDate = Calendar.current.date(byAdding: .day, value: step.rawValue , to: currentDate)
+        if let newDate = newDate {
+            currentDate = newDate
+            fetch(on: newDate)
         }
     }
     

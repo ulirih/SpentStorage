@@ -137,6 +137,9 @@ class DayViewController: UIViewController {
     @objc
     private func onPressNavRightItem() {
         let spentVC = SpentViewController()
+        spentVC.didDissmisController = { [weak self] in
+            self?.presenter.fetch(on: nil)
+        }
         
         let nav = NavigationController(rootViewController: spentVC)
         nav.modalPresentationStyle = .pageSheet

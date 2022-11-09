@@ -46,7 +46,7 @@ class SpentService: SpentServiceProtocol {
     func getSpents(on date: Date) throws -> [SpentModel] {
         let predicate = NSPredicate(format: "date >= %@ and date <= %@", Calendar.current.startOfDay(for: date) as CVarArg, Calendar.current.startOfDay(for: date).addingTimeInterval(86400.0) as CVarArg)
         
-        let sort = [NSSortDescriptor(key: "date", ascending: true)]
+        let sort = [NSSortDescriptor(key: "date", ascending: false)]
         
         let result = try dbManager.getData(
             entityName: String(describing: SpentEntity.self),

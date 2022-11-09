@@ -31,10 +31,10 @@ class DayViewPresenter {
         currentDate = Date()
     }
     
-    func fetch(on date: Date) {
-        currentDate = date
+    func fetch(on date: Date?) {
+        currentDate = date ?? currentDate
         do {
-            let result = try service.getSpents(on: date)
+            let result = try service.getSpents(on: currentDate)
             
             delegate?.presentSpents(data: result)
             delegate?.presentSum(sum: getSum(for: result))

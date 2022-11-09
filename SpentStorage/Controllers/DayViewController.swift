@@ -10,6 +10,8 @@ import UIKit
 class DayViewController: UIViewController {
     
     private let presenter = DayViewPresenter(service: SpentService())
+    private var spents: [SpentModel] = []
+    private let cellIdentifier = "spentCellId"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class DayViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         
         presenter.fetch(on: Date())
     }
@@ -46,6 +48,10 @@ class DayViewController: UIViewController {
         
         view.addSubview(headerView)
         view.addSubview(tableView)
+        
+        tableView.register(SpentViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func setupConstrains() {
@@ -153,7 +159,8 @@ class DayViewController: UIViewController {
 extension DayViewController: DayViewPresenterDelegate {
     
     func presentSpents(data: [SpentModel]) {
-        print(data)
+        spents = data
+        tableView.reloadData()
     }
     
     func presentSum(sum: Float) {
@@ -174,5 +181,20 @@ extension DayViewController: DayViewPresenterDelegate {
     
     func showError(errorMessage: String) {
         showAlertError(message: errorMessage)
+    }
+}
+
+// MARK: TableView Delegate
+extension DayViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! SpentViewCell
+        cell.setupCell(model: spents[indexPath.row])
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return spents.count
     }
 }

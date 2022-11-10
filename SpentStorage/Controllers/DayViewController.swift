@@ -11,7 +11,9 @@ class DayViewController: UIViewController {
     
     private let presenter = DayViewPresenter(service: SpentService())
     private var spents: [SpentModel] = []
+    
     private let cellIdentifier = "spentCellId"
+    private let emptyView = EmptySpentsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,6 +167,7 @@ extension DayViewController: DayViewPresenterDelegate {
     func presentSpents(data: [SpentModel]) {
         spents = data
         tableView.reloadData()
+        tableView.backgroundView = data.count > 0 ? nil : emptyView
     }
     
     func presentSum(sum: Float) {

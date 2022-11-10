@@ -1,0 +1,6 @@
+framework module Pods_SpentStorage {
+  umbrella header "Pods-SpentStorage-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -95,6 +95,7 @@ class DayViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.rowHeight = 60
         
         return table
     }()

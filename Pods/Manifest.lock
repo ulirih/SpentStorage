@@ -1,0 +1,16 @@
+PODS:
+  - LetterAvatarKit (1.2.5)
+
+DEPENDENCIES:
+  - LetterAvatarKit (= 1.2.5)
+
+SPEC REPOS:
+  trunk:
+    - LetterAvatarKit
+
+SPEC CHECKSUMS:
+  LetterAvatarKit: a1d64fc3699e399890e3c3ed5daa507c83bb3ca2
+
+PODFILE CHECKSUM: b6bd8071d2ca67cc1a180c8237bc96fb25fc88ce
+
+COCOAPODS: 1.10.1

@@ -11,6 +11,8 @@ import LetterAvatarKit
 
 class SpentViewCell: UITableViewCell {
     
+    static let cellId = "SpentCellId"
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

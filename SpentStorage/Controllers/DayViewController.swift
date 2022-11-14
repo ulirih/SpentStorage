@@ -12,7 +12,6 @@ class DayViewController: UIViewController {
     private let presenter = DayViewPresenter(service: SpentService())
     private var spents: [SpentModel] = []
     
-    private let cellIdentifier = "spentCellId"
     private let emptyView = EmptySpentsView()
 
     override func viewDidLoad() {
@@ -51,7 +50,6 @@ class DayViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(tableView)
         
-        tableView.register(SpentViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -97,6 +95,7 @@ class DayViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.register(SpentViewCell.self, forCellReuseIdentifier: SpentViewCell.cellId)
         table.rowHeight = 60
         
         return table
@@ -195,7 +194,7 @@ extension DayViewController: DayViewPresenterDelegate {
 extension DayViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! SpentViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SpentViewCell.cellId, for: indexPath) as! SpentViewCell
         cell.setupCell(model: spents[indexPath.row])
         
         return cell

@@ -1,16 +1,26 @@
 PODS:
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - LetterAvatarKit (1.2.5)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
+  - Charts
   - LetterAvatarKit (= 1.2.5)
 
 SPEC REPOS:
   trunk:
+    - Charts
     - LetterAvatarKit
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
   LetterAvatarKit: a1d64fc3699e399890e3c3ed5daa507c83bb3ca2
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: b6bd8071d2ca67cc1a180c8237bc96fb25fc88ce
+PODFILE CHECKSUM: 46516a0cfca876922b615338abd65dc69211c14c
 
 COCOAPODS: 1.10.1

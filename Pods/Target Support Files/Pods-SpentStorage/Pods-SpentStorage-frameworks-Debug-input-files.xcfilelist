@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-SpentStorage/Pods-SpentStorage-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/LetterAvatarKit/LetterAvatarKit.framework
+${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework

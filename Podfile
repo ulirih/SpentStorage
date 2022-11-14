@@ -7,5 +7,6 @@ target 'SpentStorage' do
 
   # Pods for SpentStorage
   pod "LetterAvatarKit", "1.2.5"
+  pod 'Charts'
 
 end

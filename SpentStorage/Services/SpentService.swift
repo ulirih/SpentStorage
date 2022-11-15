@@ -18,6 +18,7 @@ protocol SpentServiceProtocol {
     func addCategory(for category: CategoryModel) throws -> Void
     func addSpent(for spent: SpentModel) throws -> Void
     func getSpents(on date: Date) throws -> [SpentModel]
+    func getSpents(startDate: Date, endDate: Date) throws -> [SpentModel]
 
     // TODO: will move to settings
     func addDefaultCategories() -> Void
@@ -44,7 +45,15 @@ class SpentService: SpentServiceProtocol {
     }
     
     func getSpents(on date: Date) throws -> [SpentModel] {
-        let predicate = NSPredicate(format: "date >= %@ and date <= %@", Calendar.current.startOfDay(for: date) as CVarArg, Calendar.current.startOfDay(for: date).addingTimeInterval(86400.0) as CVarArg)
+        return try getSpents(startDate: date, endDate: date)
+    }
+    
+    func getSpents(startDate: Date, endDate: Date) throws -> [SpentModel] {
+        let predicate = NSPredicate(
+            format: "date >= %@ and date <= %@",
+            Calendar.current.startOfDay(for: startDate) as CVarArg,
+            Calendar.current.startOfDay(for: endDate).addingTimeInterval(86400.0) as CVarArg
+        )
         
         let sort = [NSSortDescriptor(key: "date", ascending: false)]
         

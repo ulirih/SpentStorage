@@ -34,6 +34,7 @@
 		5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */; };
 		5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27B290AD16F00A2E0DA /* SpentViewController.swift */; };
 		5584A27E290C400D00A2E0DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27D290C400D00A2E0DA /* Colors.swift */; };
+		55A5D57F29224C880049533D /* StatisticsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D57E29224C880049533D /* StatisticsViewPresenter.swift */; };
 		55D6C459291D0B2D00750811 /* EmptySpentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6C458291D0B2D00750811 /* EmptySpentsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		5584A278290A9CA200A2E0DA /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		5584A27B290AD16F00A2E0DA /* SpentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpentViewController.swift; sourceTree = "<group>"; };
 		5584A27D290C400D00A2E0DA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		55A5D57E29224C880049533D /* StatisticsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewPresenter.swift; sourceTree = "<group>"; };
 		55D6C458291D0B2D00750811 /* EmptySpentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySpentsView.swift; sourceTree = "<group>"; };
 		72D0E7158839033B063060AF /* Pods-SpentStorage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.debug.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.debug.xcconfig"; sourceTree = "<group>"; };
 		7F332EE1FBB24BEA0AD7F6F4 /* Pods-SpentStorage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.release.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				554B0FA2291548A400B8539B /* SpentViewPresenter.swift */,
 				554B0FA629199E7600B8539B /* DayViewPresenter.swift */,
+				55A5D57E29224C880049533D /* StatisticsViewPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				55D6C459291D0B2D00750811 /* EmptySpentsView.swift in Sources */,
 				554B0FAD291BA9C500B8539B /* SpentViewCell.swift in Sources */,
 				5584A272290976A200A2E0DA /* TabBarController.swift in Sources */,
+				55A5D57F29224C880049533D /* StatisticsViewPresenter.swift in Sources */,
 				5584A25929093EB500A2E0DA /* SceneDelegate.swift in Sources */,
 				5584A277290A95F700A2E0DA /* NavigationController.swift in Sources */,
 				5584A275290A8DA200A2E0DA /* UIColorExtension.swift in Sources */,

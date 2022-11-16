@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class StatisticsViewController: UIViewController {
+class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     private let presenter = StatisticViewPresenter(service: SpentService())
 
@@ -29,7 +29,9 @@ class StatisticsViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.addSubview(chart)
+        view.addSubview(chartView)
+        
+        chartView.delegate = self
     }
     
     private func setupNavBar() {
@@ -39,16 +41,44 @@ class StatisticsViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            chart.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            chart.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            chart.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
-            chart.heightAnchor.constraint(equalToConstant: 250)
+            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            chartView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            chartView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
     
-    let chart: BarChartView = {
+    let chartView: BarChartView = {
         let chart = BarChartView()
         chart.translatesAutoresizingMaskIntoConstraints = false
+        
+        chart.highlightPerTapEnabled = true
+        chart.highlightFullBarEnabled = true
+        chart.highlightPerDragEnabled = false
+        
+        chart.pinchZoomEnabled = false
+        chart.setScaleEnabled(false)
+        chart.doubleTapToZoomEnabled = false
+        
+        chart.drawBarShadowEnabled = false
+        chart.drawGridBackgroundEnabled = false
+        chart.drawBordersEnabled = false
+        chart.borderColor = .red
+        
+        chart.legend.enabled = false
+        chart.animate(yAxisDuration: 1.5 , easingOption: .easeOutBounce)
+        
+        let xAxis = chart.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.drawAxisLineEnabled = true
+        xAxis.drawGridLinesEnabled = false
+        xAxis.granularityEnabled = false
+//        xAxis.setLabelCount(7, force: false)
+        xAxis.valueFormatter = XAxisValueFormatter()
+        xAxis.axisLineColor = .blue
+        xAxis.labelTextColor = .red
+        
+        chart.rightAxis.enabled = false
         
         return chart
     }()
@@ -58,18 +88,29 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
     
     func presentBarChart(data: [BarChartDataEntry]) {
         let barChartDataSet = BarChartDataSet(entries: data)
-//        barChartDataSet.setColor(.blue)
-//        barChartDataSet.highlightColor = .red
-//        barChartDataSet.highlightAlpha = 1
+        barChartDataSet.setColor(.systemBlue)
+        barChartDataSet.highlightAlpha = 0.8
         
         let chartData = BarChartData(dataSet: barChartDataSet)
         chartData.setDrawValues(true)
         chartData.setValueTextColor(.blue)
-        chart.data = chartData
+        
+        chartView.data = chartData
     }
     
     func showError(errorMessage: String) {
         showAlertError(message: errorMessage)
+    }
+}
+
+class XAxisValueFormatter: AxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let date = Date(timeIntervalSince1970: value)
+        let formatter = DateFormatter()
+        formatter.timeZone = .current
+        formatter.dateFormat = "dd.MM"
+
+        return formatter.string(from: date)
     }
 }
 

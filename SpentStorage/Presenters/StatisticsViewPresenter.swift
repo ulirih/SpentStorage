@@ -23,7 +23,7 @@ class StatisticViewPresenter {
     
     func fetchDataOfLastWeek() {
         let endDate = Date()
-        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: endDate) ?? Date()
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: endDate) ?? Date()
         
         do {
             let spents = try service.getSpents(startDate: startDate, endDate: endDate)

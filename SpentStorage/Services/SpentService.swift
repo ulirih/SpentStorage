@@ -55,12 +55,10 @@ class SpentService: SpentServiceProtocol {
             Calendar.current.startOfDay(for: endDate).addingTimeInterval(86400.0) as CVarArg
         )
         
-        let sort = [NSSortDescriptor(key: "date", ascending: false)]
-        
         let result = try dbManager.getData(
             entityName: String(describing: SpentEntity.self),
             predicate: predicate,
-            sort: sort
+            sort: nil
         ) as? [SpentEntity]
         
         return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []

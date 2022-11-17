@@ -63,7 +63,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         chart.drawBarShadowEnabled = false
         chart.drawGridBackgroundEnabled = false
         chart.drawBordersEnabled = false
-        chart.borderColor = .red
         
         chart.legend.enabled = false
         chart.animate(yAxisDuration: 1.5 , easingOption: .easeOutBounce)
@@ -72,13 +71,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         xAxis.labelPosition = .bottom
         xAxis.drawAxisLineEnabled = true
         xAxis.drawGridLinesEnabled = false
-        xAxis.granularityEnabled = false
-//        xAxis.setLabelCount(7, force: false)
+        xAxis.granularity = 1
         xAxis.valueFormatter = XAxisValueFormatter()
-        xAxis.axisLineColor = .blue
-        xAxis.labelTextColor = .red
         
         chart.rightAxis.enabled = false
+        chart.legend.textColor = .red
         
         return chart
     }()
@@ -88,12 +85,10 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
     
     func presentBarChart(data: [BarChartDataEntry]) {
         let barChartDataSet = BarChartDataSet(entries: data)
-        barChartDataSet.setColor(.systemBlue)
-        barChartDataSet.highlightAlpha = 0.8
+        barChartDataSet.setColor(.systemGreen)
+        barChartDataSet.valueFont = UIFont.getHelveticFont(size: 12)
         
         let chartData = BarChartData(dataSet: barChartDataSet)
-        chartData.setDrawValues(true)
-        chartData.setValueTextColor(.blue)
         
         chartView.data = chartData
     }
@@ -105,7 +100,7 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
 
 class XAxisValueFormatter: AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let date = Date(timeIntervalSince1970: value)
+        let date = Date(timeIntervalSince1970: value * 60 * 60 * 24)
         let formatter = DateFormatter()
         formatter.timeZone = .current
         formatter.dateFormat = "dd.MM"

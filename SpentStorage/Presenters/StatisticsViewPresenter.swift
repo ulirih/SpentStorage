@@ -31,13 +31,13 @@ class StatisticViewPresenter {
             
             var chartData: [BarChartDataEntry] = []
             grouped.forEach { item in
-                let xValue = item.key.timeIntervalSince1970
+                let xValue = item.key.timeIntervalSince1970 / 60 / 60 / 24
                 let yValue = item.value.reduce(0, { $0 + Double($1.price) })
                 
                 chartData.append(BarChartDataEntry(x: xValue, y: yValue))
             }
             
-            delegate?.presentBarChart(data: chartData)
+            delegate?.presentBarChart(data: chartData.sorted(by: { $0.x < $1.x }))
             
         } catch let error {
             delegate?.showError(errorMessage: error.localizedDescription)

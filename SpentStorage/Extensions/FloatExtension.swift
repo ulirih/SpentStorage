@@ -8,12 +8,22 @@
 import Foundation
 
 extension Float {
-    func toFormattedString() -> String {
+    func toFormattedAmount() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
+        formatter.locale = .current
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 0
         
         return formatter.string(from: NSNumber(value: self)) ?? "0"
+    }
+    
+    func toFormattedPercent() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.locale = .current
+        formatter.maximumFractionDigits = 2
+        
+        return (formatter.string(from: NSNumber(value: self)) ?? "0") + " %"
     }
 }

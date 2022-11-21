@@ -11,6 +11,7 @@ import Charts
 class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     private let presenter = StatisticViewPresenter(service: SpentService())
+    private var categoryData: [StatisticCategoryModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +31,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     private func setupViews() {
         view.addSubview(chartView)
+        view.addSubview(tableView)
         
         chartView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func setupNavBar() {
@@ -44,9 +48,23 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
             chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             chartView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
-            chartView.heightAnchor.constraint(equalToConstant: 250)
+            chartView.heightAnchor.constraint(equalToConstant: 250),
+            
+            tableView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 16),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.rowHeight = 60
+        table.register(StatisticCategoryCell.self, forCellReuseIdentifier: StatisticCategoryCell.cellId)
+        
+        return table
+    }()
     
     let chartView: BarChartView = {
         let chart = BarChartView()
@@ -81,6 +99,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     }()
 }
 
+// MARK: Presenter Protocol
 extension StatisticsViewController: StatisticsViewPresenterProtocol {
     
     func presentBarChart(data: [BarChartDataEntry]) {
@@ -93,8 +112,27 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
         chartView.data = chartData
     }
     
+    func presentCategoryStatistic(data: [StatisticCategoryModel]) {
+        categoryData = data
+        tableView.reloadData()
+    }
+    
+    
     func showError(errorMessage: String) {
         showAlertError(message: errorMessage)
+    }
+}
+
+// MARK: TableView Delegates
+extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: StatisticCategoryCell.cellId, for: indexPath) as! StatisticCategoryCell
+        cell.setupCell(model: categoryData[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categoryData.count
     }
 }
 

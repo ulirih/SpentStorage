@@ -35,6 +35,8 @@
 		5584A27C290AD16F00A2E0DA /* SpentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27B290AD16F00A2E0DA /* SpentViewController.swift */; };
 		5584A27E290C400D00A2E0DA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584A27D290C400D00A2E0DA /* Colors.swift */; };
 		55A5D57F29224C880049533D /* StatisticsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D57E29224C880049533D /* StatisticsViewPresenter.swift */; };
+		55A5D581292BDC650049533D /* StatisticCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D580292BDC650049533D /* StatisticCategoryModel.swift */; };
+		55A5D583292BE35A0049533D /* StatisticCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */; };
 		55D6C459291D0B2D00750811 /* EmptySpentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6C458291D0B2D00750811 /* EmptySpentsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +71,8 @@
 		5584A27B290AD16F00A2E0DA /* SpentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpentViewController.swift; sourceTree = "<group>"; };
 		5584A27D290C400D00A2E0DA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		55A5D57E29224C880049533D /* StatisticsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewPresenter.swift; sourceTree = "<group>"; };
+		55A5D580292BDC650049533D /* StatisticCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCategoryModel.swift; sourceTree = "<group>"; };
+		55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCategoryCell.swift; sourceTree = "<group>"; };
 		55D6C458291D0B2D00750811 /* EmptySpentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySpentsView.swift; sourceTree = "<group>"; };
 		72D0E7158839033B063060AF /* Pods-SpentStorage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.debug.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.debug.xcconfig"; sourceTree = "<group>"; };
 		7F332EE1FBB24BEA0AD7F6F4 /* Pods-SpentStorage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.release.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 			children = (
 				554B0F9D291135A800B8539B /* CategoryModel.swift */,
 				554B0F9F29127C6900B8539B /* SpentModel.swift */,
+				55A5D580292BDC650049533D /* StatisticCategoryModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 				5584A26429093EB600A2E0DA /* LaunchScreen.storyboard */,
 				554B0FAC291BA9C500B8539B /* SpentViewCell.swift */,
 				55D6C458291D0B2D00750811 /* EmptySpentsView.swift */,
+				55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,8 +361,10 @@
 				554B0F9629112C8200B8539B /* SpentEntity+CoreDataProperties.swift in Sources */,
 				554B0FA3291548A400B8539B /* SpentViewPresenter.swift in Sources */,
 				554B0FA029127C6900B8539B /* SpentModel.swift in Sources */,
+				55A5D583292BE35A0049533D /* StatisticCategoryCell.swift in Sources */,
 				5584A25729093EB500A2E0DA /* AppDelegate.swift in Sources */,
 				554B0FA9291A6C4000B8539B /* FloatExtension.swift in Sources */,
+				55A5D581292BDC650049533D /* StatisticCategoryModel.swift in Sources */,
 				554B0F9B2911354300B8539B /* SpentService.swift in Sources */,
 				554B0FA5291844E200B8539B /* UIViewControllerExtension.swift in Sources */,
 				554B0F9329112C8200B8539B /* CategoryEntity+CoreDataClass.swift in Sources */,

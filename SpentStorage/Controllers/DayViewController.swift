@@ -170,7 +170,7 @@ extension DayViewController: DayViewPresenterDelegate {
     }
     
     func presentSum(sum: Float) {
-        sumLabel.text = sum.toFormattedString()
+        sumLabel.text = sum.toFormattedAmount()
     }
     
     func presentDate(date: Date) {

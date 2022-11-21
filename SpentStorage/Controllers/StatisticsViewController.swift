@@ -138,7 +138,7 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
 
 class XAxisValueFormatter: AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let date = Date(timeIntervalSince1970: value * 60 * 60 * 24)
+        let date = value.since1970DaysToDate()
         let formatter = DateFormatter()
         formatter.timeZone = .current
         formatter.dateFormat = "dd.MM"

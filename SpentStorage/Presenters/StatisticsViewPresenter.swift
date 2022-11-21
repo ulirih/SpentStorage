@@ -34,7 +34,7 @@ class StatisticViewPresenter {
             let grouped = Dictionary(grouping: spents, by: { Calendar.current.startOfDay(for: $0.date) })
             var chartData: [BarChartDataEntry] = []
             grouped.forEach { item in
-                let xValue = item.key.timeIntervalSince1970 / 60 / 60 / 24
+                let xValue = item.key.timeIntervalSince1970.since1970ToDays()
                 let yValue = item.value.reduce(0, { $0 + Double($1.price) })
                 
                 chartData.append(BarChartDataEntry(x: xValue, y: yValue))

@@ -104,7 +104,7 @@ class DayViewController: UIViewController {
     private let sumLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.getHelveticFont(size: 32)
+        label.font = UIFont.getNunitoFont(type: .bold, size: 28)
         
         return label
     }()
@@ -112,7 +112,7 @@ class DayViewController: UIViewController {
     private let dateLabel: UILabel = {
         let date = UILabel()
         date.translatesAutoresizingMaskIntoConstraints = false
-        date.font = UIFont.getHelveticFont()
+        date.font = UIFont.getNunitoFont(type: .regular)
         date.textColor = Colors.navigationBarTitleColor
         
         return date

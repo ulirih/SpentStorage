@@ -30,6 +30,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     }
     
     private func setupViews() {
+        view.addSubview(periodSegment)
         view.addSubview(chartView)
         view.addSubview(tableView)
         
@@ -39,16 +40,20 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     }
     
     private func setupNavBar() {
-        view.backgroundColor = Colors.backgroundColor
+        view.backgroundColor = .white
         title = Tabs.statistics.title
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            periodSegment.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            periodSegment.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            periodSegment.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            
+            chartView.topAnchor.constraint(equalTo: periodSegment.bottomAnchor, constant: 8),
             chartView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
-            chartView.heightAnchor.constraint(equalToConstant: 250),
+            chartView.heightAnchor.constraint(equalToConstant: 200),
             
             tableView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 16),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -64,6 +69,14 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         table.register(StatisticCategoryCell.self, forCellReuseIdentifier: StatisticCategoryCell.cellId)
         
         return table
+    }()
+    
+    let periodSegment: UISegmentedControl = {
+        let segment = UISegmentedControl(items: ["Year", "Month", "Week"])
+        segment.translatesAutoresizingMaskIntoConstraints = false
+        segment.selectedSegmentIndex = 2
+        
+        return segment
     }()
     
     let chartView: BarChartView = {
@@ -93,7 +106,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         xAxis.valueFormatter = XAxisValueFormatter()
         
         chart.rightAxis.enabled = false
-        chart.legend.textColor = .red
+        chart.leftAxis.spaceBottom = 0
         
         return chart
     }()
@@ -105,10 +118,9 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
     func presentBarChart(data: [BarChartDataEntry]) {
         let barChartDataSet = BarChartDataSet(entries: data)
         barChartDataSet.setColor(.systemGreen)
-        barChartDataSet.valueFont = UIFont.getHelveticFont(size: 12)
+        barChartDataSet.valueFont = UIFont.getNunitoFont(type: .regular, size: 12)
         
         let chartData = BarChartData(dataSet: barChartDataSet)
-        
         chartView.data = chartData
     }
     
@@ -116,7 +128,6 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
         categoryData = data
         tableView.reloadData()
     }
-    
     
     func showError(errorMessage: String) {
         showAlertError(message: errorMessage)

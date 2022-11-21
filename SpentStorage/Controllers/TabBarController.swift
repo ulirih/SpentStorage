@@ -48,14 +48,19 @@ class TabBarController: UITabBarController {
         tabBar.layer.borderColor = UIColor.lightGray.cgColor
         tabBar.clipsToBounds = true
         
-        let dayViewController = DayViewController()
-        let navDayViewController = NavigationController(rootViewController: dayViewController)
-        
-        let statisticViewController = StatisticsViewController()
-        let navStatisticsViewController = NavigationController(rootViewController: statisticViewController)
+        let navDayViewController = NavigationController(rootViewController: DayViewController())
+        let navStatisticsViewController = NavigationController(rootViewController: StatisticsViewController())
 
-        navDayViewController.tabBarItem = UITabBarItem(title: Tabs.day.title, image: Tabs.day.icon, tag: Tabs.day.tag.rawValue)
-        navStatisticsViewController.tabBarItem = UITabBarItem(title: Tabs.statistics.title, image: Tabs.statistics.icon, tag: Tabs.statistics.tag.rawValue)
+        navDayViewController.tabBarItem = UITabBarItem(
+            title: Tabs.day.title,
+            image: Tabs.day.icon,
+            tag: Tabs.day.tag.rawValue
+        )
+        navStatisticsViewController.tabBarItem = UITabBarItem(
+            title: Tabs.statistics.title,
+            image: Tabs.statistics.icon,
+            tag: Tabs.statistics.tag.rawValue
+        )
         
         self.setViewControllers([
             navDayViewController,

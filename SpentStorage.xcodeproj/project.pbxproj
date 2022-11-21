@@ -38,6 +38,10 @@
 		55A5D581292BDC650049533D /* StatisticCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D580292BDC650049533D /* StatisticCategoryModel.swift */; };
 		55A5D583292BE35A0049533D /* StatisticCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */; };
 		55A5D585292C0CE80049533D /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D584292C0CE80049533D /* DoubleExtensions.swift */; };
+		55A5D58C292C23650049533D /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55A5D589292C21860049533D /* NunitoSans-Bold.ttf */; };
+		55A5D58D292C23680049533D /* NunitoSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55A5D58B292C21860049533D /* NunitoSans-ExtraLight.ttf */; };
+		55A5D58E292C236B0049533D /* NunitoSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55A5D588292C21860049533D /* NunitoSans-Light.ttf */; };
+		55A5D58F292C236E0049533D /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55A5D58A292C21860049533D /* NunitoSans-Regular.ttf */; };
 		55D6C459291D0B2D00750811 /* EmptySpentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6C458291D0B2D00750811 /* EmptySpentsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +79,10 @@
 		55A5D580292BDC650049533D /* StatisticCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCategoryModel.swift; sourceTree = "<group>"; };
 		55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCategoryCell.swift; sourceTree = "<group>"; };
 		55A5D584292C0CE80049533D /* DoubleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
+		55A5D588292C21860049533D /* NunitoSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-Light.ttf"; sourceTree = "<group>"; };
+		55A5D589292C21860049533D /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
+		55A5D58A292C21860049533D /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
+		55A5D58B292C21860049533D /* NunitoSans-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
 		55D6C458291D0B2D00750811 /* EmptySpentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySpentsView.swift; sourceTree = "<group>"; };
 		72D0E7158839033B063060AF /* Pods-SpentStorage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.debug.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.debug.xcconfig"; sourceTree = "<group>"; };
 		7F332EE1FBB24BEA0AD7F6F4 /* Pods-SpentStorage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.release.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,8 +166,8 @@
 		5584A25529093EB500A2E0DA /* SpentStorage */ = {
 			isa = PBXGroup;
 			children = (
-				554B0FA12915488000B8539B /* Presenters */,
 				554B0F9C2911358500B8539B /* Models */,
+				554B0FA12915488000B8539B /* Presenters */,
 				554B0F992911351D00B8539B /* Services */,
 				5584A273290A8D8200A2E0DA /* Extensions */,
 				5584A2702909431400A2E0DA /* CoreDB */,
@@ -184,6 +192,7 @@
 		5584A26E290942D900A2E0DA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55A5D587292C213B0049533D /* fonts */,
 				5584A26229093EB600A2E0DA /* Assets.xcassets */,
 				5584A27D290C400D00A2E0DA /* Colors.swift */,
 			);
@@ -193,10 +202,9 @@
 		5584A26F290942F800A2E0DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				55A5D586292C19FE0049533D /* Cells */,
 				5584A26429093EB600A2E0DA /* LaunchScreen.storyboard */,
-				554B0FAC291BA9C500B8539B /* SpentViewCell.swift */,
 				55D6C458291D0B2D00750811 /* EmptySpentsView.swift */,
-				55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +244,26 @@
 				5584A276290A95F700A2E0DA /* NavigationController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		55A5D586292C19FE0049533D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				55A5D582292BE35A0049533D /* StatisticCategoryCell.swift */,
+				554B0FAC291BA9C500B8539B /* SpentViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		55A5D587292C213B0049533D /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				55A5D589292C21860049533D /* NunitoSans-Bold.ttf */,
+				55A5D58B292C21860049533D /* NunitoSans-ExtraLight.ttf */,
+				55A5D588292C21860049533D /* NunitoSans-Light.ttf */,
+				55A5D58A292C21860049533D /* NunitoSans-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +326,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A5D58D292C23680049533D /* NunitoSans-ExtraLight.ttf in Resources */,
+				55A5D58F292C236E0049533D /* NunitoSans-Regular.ttf in Resources */,
+				55A5D58C292C23650049533D /* NunitoSans-Bold.ttf in Resources */,
+				55A5D58E292C236B0049533D /* NunitoSans-Light.ttf in Resources */,
 				5584A26629093EB600A2E0DA /* LaunchScreen.storyboard in Resources */,
 				5584A26329093EB600A2E0DA /* Assets.xcassets in Resources */,
 			);

@@ -20,7 +20,7 @@ class NavigationController: UINavigationController {
         view.backgroundColor = .white
         navigationBar.standardAppearance.titleTextAttributes = [
             .foregroundColor: Colors.navigationBarTitleColor,
-            .font: UIFont.getHelveticFont(size: 17)
+            .font: UIFont.getNunitoFont(type: .regular)
         ]
     }
 }

@@ -121,7 +121,7 @@ class SpentViewController: UIViewController {
         
         let label = UILabel()
         label.text = "Date"
-        label.font = UIFont.getHelveticFont()
+        label.font = UIFont.getNunitoFont(type: .regular)
         label.textColor = Colors.navigationBarTitleColor
         container.addArrangedSubview(label)
         
@@ -132,7 +132,7 @@ class SpentViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Save", for: .normal)
-        button.titleLabel?.font = UIFont.getHelveticFont(size: 18)
+        button.titleLabel?.font = UIFont.getNunitoFont(type: .bold, size: 18)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
         button.backgroundColor = Colors.buttonBackgroundColor
@@ -182,7 +182,7 @@ extension SpentViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         var cellConfig = cell.defaultContentConfiguration()
         cellConfig.text = categories[indexPath.row].name
-        cellConfig.textProperties.font = UIFont.getHelveticFont()
+        cellConfig.textProperties.font = UIFont.getNunitoFont(type: .regular)
         cell.contentConfiguration = cellConfig
         
         return cell

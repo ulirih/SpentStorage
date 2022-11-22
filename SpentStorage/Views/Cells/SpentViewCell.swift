@@ -62,6 +62,7 @@ class SpentViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.getNunitoFont(type: .bold)
+        label.textColor = Colors.navigationBarTitleColor
         return label
     }()
     

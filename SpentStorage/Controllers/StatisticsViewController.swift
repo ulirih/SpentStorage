@@ -26,7 +26,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        presenter.fetchDataOfLastWeek()
+        presenter.fetchData(for: .week)
     }
     
     private func setupViews() {
@@ -75,6 +75,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         let segment = UISegmentedControl(items: ["Year", "Month", "Week"])
         segment.translatesAutoresizingMaskIntoConstraints = false
         segment.selectedSegmentIndex = 2
+        segment.addTarget(self, action: #selector(onChangeSegment), for: .valueChanged)
         
         return segment
     }()
@@ -110,6 +111,17 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         
         return chart
     }()
+    
+    @objc
+    private func onChangeSegment() {
+        if periodSegment.selectedSegmentIndex == 0 {
+            presenter.fetchData(for: .year)
+        } else if periodSegment.selectedSegmentIndex == 1 {
+            presenter.fetchData(for: .month)
+        } else {
+            presenter.fetchData(for: .week)
+        }
+    }
 }
 
 // MARK: Presenter Protocol

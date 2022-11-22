@@ -8,6 +8,26 @@
 import Foundation
 import Charts
 
+enum ChartPeriodType {
+    case year
+    case month
+    case week
+    
+    func getDetesInterval() -> (startDate: Date, endDate: Date) {
+        var startDate: Date
+        switch self {
+        case .year:
+            startDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
+        case .month:
+            startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        case .week:
+            startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        }
+        
+        return (startDate, Date())
+    }
+}
+
 protocol StatisticsViewPresenterProtocol: AnyObject {
     func presentBarChart(data: [BarChartDataEntry]) -> Void
     func presentCategoryStatistic(data: [StatisticCategoryModel]) -> Void
@@ -16,20 +36,22 @@ protocol StatisticsViewPresenterProtocol: AnyObject {
 
 class StatisticViewPresenter {
     weak var delegate: StatisticsViewPresenterProtocol?
+    
     private let service: SpentServiceProtocol
+    private var selectedPeriod: ChartPeriodType = .week
     
     init(service: SpentServiceProtocol) {
         self.service = service
     }
     
-    func fetchDataOfLastWeek() {
-        let endDate = Date()
-        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: endDate) ?? Date()
+    func fetchData(for periodType: ChartPeriodType) {
+        selectedPeriod = periodType
+        let (startDate, endDate) = periodType.getDetesInterval()
         
         do {
             let spents = try service.getSpents(startDate: startDate, endDate: endDate)
             
-            delegate?.presentBarChart(data: groupByDate(for: spents))
+            delegate?.presentBarChart(data: groupByPeriod(for: spents))
             delegate?.presentCategoryStatistic(data: groupByCategory(for: spents))
             
         } catch let error {
@@ -37,14 +59,23 @@ class StatisticViewPresenter {
         }
     }
     
-    private func groupByDate(for spents: [SpentModel]) -> [BarChartDataEntry] {
+    private func groupByPeriod(for spents: [SpentModel]) -> [BarChartDataEntry] {
         let groups = Dictionary(grouping: spents, by: { Calendar.current.startOfDay(for: $0.date) })
+        
+        // get all dates in period
+        let (startedDate, endDate) = selectedPeriod.getDetesInterval()
+        let dates = dateRange(starDate: startedDate, endDate: endDate)
+        
         var chartData: [BarChartDataEntry] = []
-        groups.forEach { item in
-            let xValue = item.key.timeIntervalSince1970.since1970ToDays()
-            let yValue = item.value.reduce(0, { $0 + Double($1.price) })
-            
-            chartData.append(BarChartDataEntry(x: xValue, y: yValue))
+        dates.forEach { date in
+            if let sameDay = groups[Calendar.current.startOfDay(for: date)] {
+                let xValue = date.timeIntervalSince1970.since1970ToDays()
+                let yValue = sameDay.reduce(0, { $0 + Double($1.price) })
+                
+                chartData.append(BarChartDataEntry(x: xValue, y: yValue))
+            } else {
+                chartData.append(BarChartDataEntry(x: date.timeIntervalSince1970.since1970ToDays(), y: 0))
+            }
         }
         
         return chartData.sorted(by: { $0.x < $1.x })
@@ -63,5 +94,17 @@ class StatisticViewPresenter {
         }
         
         return categoryData.sorted(by: { $0.amount > $1.amount })
+    }
+    
+    private func dateRange(starDate: Date, endDate: Date) -> [Date] {
+        var dates: [Date] = []
+        var date = starDate
+        while !Calendar.current.isDate(date, equalTo: endDate, toGranularity: .day) {
+            let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+            dates.append(newDate)
+            date = newDate
+        }
+        
+        return dates
     }
 }

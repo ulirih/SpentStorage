@@ -11,7 +11,7 @@ import Charts
 class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     private let presenter = StatisticViewPresenter(service: SpentService())
-    private var categoryData: [StatisticCategoryModel] = []
+    private var categoriesData: [StatisticCategoryModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +62,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         ])
     }
     
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.rowHeight = 60
@@ -71,7 +71,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         return table
     }()
     
-    let periodSegment: UISegmentedControl = {
+    private let periodSegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["Year", "Month", "Week"])
         segment.translatesAutoresizingMaskIntoConstraints = false
         segment.selectedSegmentIndex = 2
@@ -80,7 +80,15 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         return segment
     }()
     
-    let chartView: BarChartView = {
+    private var barChartDataSet: BarChartDataSet = {
+        let dataSet = BarChartDataSet()
+        dataSet.setColor(.systemGreen)
+        dataSet.valueFont = UIFont.getNunitoFont(type: .regular, size: 12)
+        
+        return dataSet
+    }()
+    
+    private let chartView: BarChartView = {
         let chart = BarChartView()
         chart.translatesAutoresizingMaskIntoConstraints = false
         
@@ -128,16 +136,15 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
 extension StatisticsViewController: StatisticsViewPresenterProtocol {
     
     func presentBarChart(data: [BarChartDataEntry]) {
-        let barChartDataSet = BarChartDataSet(entries: data)
-        barChartDataSet.setColor(.systemGreen)
-        barChartDataSet.valueFont = UIFont.getNunitoFont(type: .regular, size: 12)
+        barChartDataSet.replaceEntries(data)
+        barChartDataSet.drawValuesEnabled = presenter.selectedPeriod == .week
         
         let chartData = BarChartData(dataSet: barChartDataSet)
         chartView.data = chartData
     }
     
     func presentCategoryStatistic(data: [StatisticCategoryModel]) {
-        categoryData = data
+        categoriesData = data
         tableView.reloadData()
     }
     
@@ -150,12 +157,12 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
 extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StatisticCategoryCell.cellId, for: indexPath) as! StatisticCategoryCell
-        cell.setupCell(model: categoryData[indexPath.row])
+        cell.setupCell(model: categoriesData[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryData.count
+        return categoriesData.count
     }
 }
 

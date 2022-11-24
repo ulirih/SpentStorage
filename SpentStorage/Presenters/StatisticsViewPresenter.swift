@@ -38,7 +38,8 @@ class StatisticViewPresenter {
     weak var delegate: StatisticsViewPresenterProtocol?
     
     private let service: SpentServiceProtocol
-    private var selectedPeriod: ChartPeriodType = .week
+    //TODO: move to delegate
+    var selectedPeriod: ChartPeriodType = .week
     
     init(service: SpentServiceProtocol) {
         self.service = service

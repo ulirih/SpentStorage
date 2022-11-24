@@ -10,7 +10,7 @@ import Foundation
 extension Double {
 
     func since1970ToDays() -> Double {
-        return self / 60 / 60 / 24
+        return trunc(self / 60 / 60 / 24)
     }
     
     func since1970DaysToDate() -> Date {

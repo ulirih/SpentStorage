@@ -13,7 +13,7 @@ class EmptySpentsView: UIView {
         let label = UILabel()
         label.text = "You didn't have spends"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.getHelveticFont(size: 18)
+        label.font = UIFont.getNunitoFont(type: .regular, size: 18)
         label.textColor = Colors.navigationBarTitleColor
         return label
     }()

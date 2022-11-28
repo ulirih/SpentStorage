@@ -52,8 +52,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
             periodSegment.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             
             chartView.topAnchor.constraint(equalTo: periodSegment.bottomAnchor, constant: 8),
-            chartView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            chartView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            chartView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             chartView.heightAnchor.constraint(equalToConstant: 200),
             
             spentsSumLabel.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 16),
@@ -61,8 +61,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
             spentsSumLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             
             tableView.topAnchor.constraint(equalTo: spentsSumLabel.bottomAnchor, constant: 16),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

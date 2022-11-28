@@ -63,8 +63,8 @@ class DayViewController: UIViewController {
             
             tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             sumLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
             sumLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),

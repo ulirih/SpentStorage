@@ -14,17 +14,22 @@ enum ChartPeriodType {
     case week
     
     func getDetesInterval() -> (startDate: Date, endDate: Date) {
-        var startDate: Date
+        var start: Date
+        var end: Date?
+        let calendar = Calendar.current
+        
         switch self {
         case .year:
-            startDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
+            let year = calendar.component(.year, from: Date())
+            start = calendar.date(from: DateComponents(year: year, month: 1, day: 1))!
+            end = calendar.date(from: DateComponents(year: year, month: 12, day: 31))
         case .month:
-            startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+            start = calendar.date(byAdding: .month, value: -1, to: Date())!
         case .week:
-            startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+            start = calendar.date(byAdding: .weekOfYear, value: -1, to: Date())!
         }
         
-        return (startDate, Date())
+        return (start, end ?? Date())
     }
 }
 
@@ -62,21 +67,32 @@ class StatisticViewPresenter {
     }
     
     private func groupByPeriod(for spents: [SpentModel]) -> [BarChartDataEntry] {
-        let groups = Dictionary(grouping: spents, by: { Calendar.current.startOfDay(for: $0.date) })
-        
-        // get all dates in period
-        let (startedDate, endDate) = selectedPeriod.getDetesInterval()
-        let dates = dateRange(starDate: startedDate, endDate: endDate)
-        
         var chartData: [BarChartDataEntry] = []
-        dates.forEach { date in
-            if let sameDay = groups[Calendar.current.startOfDay(for: date)] {
-                let xValue = date.timeIntervalSince1970.since1970ToDays()
-                let yValue = sameDay.reduce(0, { $0 + Double($1.price) })
-                
-                chartData.append(BarChartDataEntry(x: xValue, y: yValue))
-            } else {
-                chartData.append(BarChartDataEntry(x: date.timeIntervalSince1970.since1970ToDays(), y: 0))
+        
+        switch selectedPeriod {
+        case .year:
+            // grouping by months
+            let groups = Dictionary(grouping: spents, by: { Calendar.current.dateComponents([.month], from: $0.date).month })
+            for month in 1...12 {
+                let values = groups[month]
+                let yValue = values != nil ? values!.reduce(0, { $0 + Double($1.price) }) : 0
+                chartData.append(BarChartDataEntry(x: Double(month), y: yValue))
+            }
+        case .month, .week:
+            // grouping by days
+            let groups = Dictionary(grouping: spents, by: { Calendar.current.startOfDay(for: $0.date) })
+            let (startedDate, endDate) = selectedPeriod.getDetesInterval()
+            let dates = dateRange(starDate: startedDate, endDate: endDate)
+            
+            dates.forEach { date in
+                if let sameDay = groups[Calendar.current.startOfDay(for: date)] {
+                    let xValue = date.timeIntervalSince1970.since1970ToDays()
+                    let yValue = sameDay.reduce(0, { $0 + Double($1.price) })
+                    
+                    chartData.append(BarChartDataEntry(x: xValue, y: yValue))
+                } else {
+                    chartData.append(BarChartDataEntry(x: date.timeIntervalSince1970.since1970ToDays(), y: 0))
+                }
             }
         }
         
@@ -86,6 +102,7 @@ class StatisticViewPresenter {
     private func groupByCategory(for spents: [SpentModel]) -> [StatisticCategoryModel] {
         let balance = spents.reduce(0, { $0 + $1.price })
         let groups = Dictionary(grouping: spents, by: { $0.type.id })
+        
         var categoryData: [StatisticCategoryModel] = []
         groups.forEach { item in
             let amount = item.value.reduce(0, { $0 + $1.price })

@@ -126,7 +126,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         xAxis.drawAxisLineEnabled = true
         xAxis.drawGridLinesEnabled = false
         xAxis.granularity = 1
-        xAxis.valueFormatter = XAxisValueFormatter()
         
         chart.rightAxis.enabled = false
         chart.leftAxis.spaceBottom = 0
@@ -157,6 +156,7 @@ extension StatisticsViewController: StatisticsViewPresenterProtocol {
         barChartDataSet.drawValuesEnabled = presenter.selectedPeriod == .week
         
         let chartData = BarChartData(dataSet: barChartDataSet)
+        chartView.xAxis.valueFormatter = XAxisValueFormatter(periodType: presenter.selectedPeriod)
         chartView.data = chartData
     }
     
@@ -184,11 +184,22 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 class XAxisValueFormatter: AxisValueFormatter {
+    private let periodType: ChartPeriodType
+    
+    init(periodType: ChartPeriodType) {
+        self.periodType = periodType
+    }
+    
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let date = value.since1970DaysToDate()
+        let isYearPeriod = periodType == .year
+        
+        let date = isYearPeriod
+            ? Calendar.current.date(from: DateComponents(month: Int(value))) ?? Date()
+            : value.since1970DaysToDate()
+        
         let formatter = DateFormatter()
         formatter.timeZone = .current
-        formatter.dateFormat = "dd.MM"
+        formatter.dateFormat = isYearPeriod ? "MMM" : "dd.MM"
 
         return formatter.string(from: date)
     }

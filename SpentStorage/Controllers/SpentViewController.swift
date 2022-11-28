@@ -83,12 +83,17 @@ class SpentViewController: UIViewController {
     
     @objc
     private func onPressSave() {
-        let selectedRow = tableView.indexPathForSelectedRow
+        let selectedRow = tableView.indexPathForSelectedRow?.row
         if selectedRow == nil || (priceTextField.text?.isEmpty ?? true) || Float(priceTextField.text!) == nil {
             showAlertError(message: "Category of spend is not selected")
+            return
         }
         
-        viewPresenter.addSpent(price: Float(priceTextField.text!)!, date: datePicker.date, type: categories[selectedRow!.row])
+        viewPresenter.addSpent(
+            price: Float(priceTextField.text!)!,
+            date: datePicker.date,
+            type: categories[selectedRow!]
+        )
     }
     
     // MARK: views

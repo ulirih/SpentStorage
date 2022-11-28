@@ -33,6 +33,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         view.addSubview(periodSegment)
         view.addSubview(chartView)
         view.addSubview(tableView)
+        view.addSubview(spentsSumLabel)
         
         chartView.delegate = self
         tableView.dataSource = self
@@ -55,12 +56,25 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
             chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             chartView.heightAnchor.constraint(equalToConstant: 200),
             
-            tableView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 16),
+            spentsSumLabel.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 16),
+            spentsSumLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            spentsSumLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            
+            tableView.topAnchor.constraint(equalTo: spentsSumLabel.bottomAnchor, constant: 16),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    private let spentsSumLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.getNunitoFont(type: .bold, size: 24)
+        label.textAlignment = .center
+        
+        return label
+    }()
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -134,6 +148,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
 
 // MARK: Presenter Protocol
 extension StatisticsViewController: StatisticsViewPresenterProtocol {
+    func presentSpentSum(total: Float) {
+        spentsSumLabel.text = total.toFormattedAmount()
+    }
     
     func presentBarChart(data: [BarChartDataEntry]) {
         barChartDataSet.replaceEntries(data)

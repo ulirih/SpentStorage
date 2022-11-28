@@ -31,15 +31,15 @@ enum ChartPeriodType {
 protocol StatisticsViewPresenterProtocol: AnyObject {
     func presentBarChart(data: [BarChartDataEntry]) -> Void
     func presentCategoryStatistic(data: [StatisticCategoryModel]) -> Void
+    func presentSpentSum(total: Float) -> Void
     func showError(errorMessage: String) -> Void
 }
 
 class StatisticViewPresenter {
     weak var delegate: StatisticsViewPresenterProtocol?
+    var selectedPeriod: ChartPeriodType = .week
     
     private let service: SpentServiceProtocol
-    //TODO: move to delegate
-    var selectedPeriod: ChartPeriodType = .week
     
     init(service: SpentServiceProtocol) {
         self.service = service
@@ -52,6 +52,7 @@ class StatisticViewPresenter {
         do {
             let spents = try service.getSpents(startDate: startDate, endDate: endDate)
             
+            delegate?.presentSpentSum(total: spents.reduce(0, { $0 + $1.price }))
             delegate?.presentBarChart(data: groupByPeriod(for: spents))
             delegate?.presentCategoryStatistic(data: groupByCategory(for: spents))
             

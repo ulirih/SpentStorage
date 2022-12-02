@@ -33,10 +33,14 @@ enum ChartPeriodType {
     }
 }
 
+enum StatisticType {
+    case amount(value: Float)
+    case chart(data: [BarChartDataEntry])
+    case categories(items: [StatisticCategoryModel])
+}
+
 protocol StatisticsViewPresenterProtocol: AnyObject {
-    func presentBarChart(data: [BarChartDataEntry]) -> Void
-    func presentCategoryStatistic(data: [StatisticCategoryModel]) -> Void
-    func presentSpentSum(total: Float) -> Void
+    func didLoadStatistic(statistic: [StatisticType]) -> Void
     func showError(errorMessage: String) -> Void
 }
 
@@ -56,14 +60,18 @@ class StatisticViewPresenter {
         
         do {
             let spents = try service.getSpents(startDate: startDate, endDate: endDate)
-            
-            delegate?.presentSpentSum(total: spents.reduce(0, { $0 + $1.price }))
-            delegate?.presentBarChart(data: groupByPeriod(for: spents))
-            delegate?.presentCategoryStatistic(data: groupByCategory(for: spents))
-            
+            delegate?.didLoadStatistic(statistic: createStatisticsData(spents))
         } catch let error {
             delegate?.showError(errorMessage: error.localizedDescription)
         }
+    }
+    
+    private func createStatisticsData(_ spents: [SpentModel]) -> [StatisticType] {
+        let balance = StatisticType.amount(value: getSpentsAmount(for: spents))
+        let barValues = StatisticType.chart(data: groupByPeriod(for: spents))
+        let categories = StatisticType.categories(items: groupByCategory(for: spents))
+        
+        return [barValues, balance, categories]
     }
     
     private func groupByPeriod(for spents: [SpentModel]) -> [BarChartDataEntry] {
@@ -100,7 +108,7 @@ class StatisticViewPresenter {
     }
     
     private func groupByCategory(for spents: [SpentModel]) -> [StatisticCategoryModel] {
-        let balance = spents.reduce(0, { $0 + $1.price })
+        let balance = getSpentsAmount(for: spents)
         let groups = Dictionary(grouping: spents, by: { $0.type.id })
         
         var categoryData: [StatisticCategoryModel] = []
@@ -113,6 +121,10 @@ class StatisticViewPresenter {
         }
         
         return categoryData.sorted(by: { $0.amount > $1.amount })
+    }
+    
+    private func getSpentsAmount(for spents: [SpentModel]) -> Float {
+        spents.reduce(0, { $0 + $1.price })
     }
     
     private func dateRange(starDate: Date, endDate: Date) -> [Date] {

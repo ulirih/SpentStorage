@@ -11,7 +11,7 @@ class SpentViewController: UIViewController {
     
     var didDissmisController: (() -> Void)?
     
-    private let viewPresenter: SpentViewPresenter = SpentViewPresenter(service: SpentService())
+    private var viewPresenter: SpentViewPresenterProtocol!
     private var categories: [CategoryModel] = []
     private let reuseIdentifier = "CategoryCell"
     
@@ -22,7 +22,7 @@ class SpentViewController: UIViewController {
         setupLayout()
         setupConstrains()
         
-        viewPresenter.delegate = self
+        viewPresenter = SpentViewPresenter(view: self, service: SpentService())
         viewPresenter.fetchCategories()
     }
     
@@ -38,7 +38,6 @@ class SpentViewController: UIViewController {
     }
     
     private func setupTableView() {
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
@@ -157,8 +156,8 @@ class SpentViewController: UIViewController {
 }
 
 
-// MARK: Presenter Delegate
-extension SpentViewController: SpentViewPresenterDelegate {
+// MARK: View Protocol
+extension SpentViewController: SpentViewProtocol {
     func presentCategories(categories: [CategoryModel]) {
         self.categories = categories
         tableView.reloadData()
@@ -177,7 +176,7 @@ extension SpentViewController: SpentViewPresenterDelegate {
 
 
 // MARK: TableView Delegates
-extension SpentViewController: UITableViewDelegate, UITableViewDataSource {
+extension SpentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count

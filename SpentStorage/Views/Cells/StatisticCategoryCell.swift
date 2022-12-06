@@ -41,8 +41,6 @@ class StatisticCategoryCell: UITableViewCell {
     
     private func setupConstrains() {
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 60),
-            
             avatarImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             avatarImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             

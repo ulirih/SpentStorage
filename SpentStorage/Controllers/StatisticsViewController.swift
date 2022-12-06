@@ -68,8 +68,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.rowHeight = UITableView.automaticDimension
+        table.isUserInteractionEnabled = true
+        table.allowsSelection = false
         table.register(StatisticCategoryCell.self, forCellReuseIdentifier: StatisticCategoryCell.cellId)
         table.register(BarChartCell.self, forCellReuseIdentifier: BarChartCell.cellId)
+        table.register(TotalAmountCell.self, forCellReuseIdentifier: TotalAmountCell.cellId)
         
         return table
     }()
@@ -112,13 +115,9 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch statisticsData[indexPath.section] {
-            
         case .amount(let value):
-            let cell = UITableViewCell()
-            var cellConfig = cell.defaultContentConfiguration()
-            cellConfig.text = value.toFormattedAmount()
-            cellConfig.textProperties.font = UIFont.getNunitoFont(type: .bold, size: 24)
-            cell.contentConfiguration = cellConfig
+            let cell = tableView.dequeueReusableCell(withIdentifier: TotalAmountCell.cellId, for: indexPath) as! TotalAmountCell
+            cell.amountLabel.text = value.toFormattedAmount()
             return cell
             
         case .categories(let items):
@@ -144,6 +143,14 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
         case .amount: return 1
         case .chart: return 1
         case .categories(let items): return items.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch statisticsData[indexPath.section] {
+        case .categories: return 60
+        case .chart: return 200
+        case .amount: return 100
         }
     }
     

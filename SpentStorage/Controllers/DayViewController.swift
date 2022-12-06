@@ -140,7 +140,7 @@ class DayViewController: UIViewController {
     private func onPressNavRightItem() {
         let spentVC = SpentViewController()
         spentVC.didDissmisController = { [weak self] in
-            self?.presenter.fetch(on: nil)
+            self?.presenter.fetch()
         }
         
         let nav = NavigationController(rootViewController: spentVC)

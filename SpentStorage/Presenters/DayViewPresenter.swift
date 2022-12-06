@@ -31,7 +31,7 @@ class DayViewPresenter {
         currentDate = Date()
     }
     
-    func fetch(on date: Date?) {
+    func fetch(on date: Date? = nil) {
         currentDate = date ?? currentDate
         do {
             let result = try service.getSpents(on: currentDate)

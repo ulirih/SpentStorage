@@ -44,6 +44,7 @@
 		55A5D58F292C236E0049533D /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55A5D58A292C21860049533D /* NunitoSans-Regular.ttf */; };
 		55A5D591293A89310049533D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D590293A89310049533D /* BarChartCell.swift */; };
 		55A5D593293F4D3F0049533D /* TotalAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D592293F4D3F0049533D /* TotalAmountCell.swift */; };
+		55A5D59529409FF80049533D /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5D59429409FF80049533D /* ServiceProtocol.swift */; };
 		55D6C459291D0B2D00750811 /* EmptySpentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6C458291D0B2D00750811 /* EmptySpentsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		55A5D58B292C21860049533D /* NunitoSans-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
 		55A5D590293A89310049533D /* BarChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartCell.swift; sourceTree = "<group>"; };
 		55A5D592293F4D3F0049533D /* TotalAmountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalAmountCell.swift; sourceTree = "<group>"; };
+		55A5D59429409FF80049533D /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
 		55D6C458291D0B2D00750811 /* EmptySpentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySpentsView.swift; sourceTree = "<group>"; };
 		72D0E7158839033B063060AF /* Pods-SpentStorage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.debug.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.debug.xcconfig"; sourceTree = "<group>"; };
 		7F332EE1FBB24BEA0AD7F6F4 /* Pods-SpentStorage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpentStorage.release.xcconfig"; path = "Target Support Files/Pods-SpentStorage/Pods-SpentStorage.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				554B0F9A2911354300B8539B /* SpentService.swift */,
+				55A5D59429409FF80049533D /* ServiceProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				554B0FA9291A6C4000B8539B /* FloatExtension.swift in Sources */,
 				55A5D581292BDC650049533D /* StatisticCategoryModel.swift in Sources */,
 				554B0F9B2911354300B8539B /* SpentService.swift in Sources */,
+				55A5D59529409FF80049533D /* ServiceProtocol.swift in Sources */,
 				554B0FA5291844E200B8539B /* UIViewControllerExtension.swift in Sources */,
 				554B0F9329112C8200B8539B /* CategoryEntity+CoreDataClass.swift in Sources */,
 				5584A279290A9CA200A2E0DA /* StatisticsViewController.swift in Sources */,

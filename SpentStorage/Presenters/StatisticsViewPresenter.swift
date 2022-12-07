@@ -45,7 +45,7 @@ protocol StatisticsViewProtocol: AnyObject {
 }
 
 protocol StatisticsPresenterViewProtocol {
-    init(view: StatisticsViewProtocol, service: SpentServiceProtocol)
+    init(view: StatisticsViewProtocol, service: ServiceProtocol)
     
     var selectedPeriod: StatisticPeriodType { get set }
     func fetchData(for periodType: StatisticPeriodType) -> Void
@@ -56,9 +56,9 @@ class StatisticViewPresenter: StatisticsPresenterViewProtocol {
     var selectedPeriod: StatisticPeriodType = .week
     
     private weak var view: StatisticsViewProtocol?
-    private let service: SpentServiceProtocol
+    private let service: ServiceProtocol
     
-    required init(view: StatisticsViewProtocol, service: SpentServiceProtocol) {
+    required init(view: StatisticsViewProtocol, service: ServiceProtocol) {
         self.service = service
         self.view = view
     }

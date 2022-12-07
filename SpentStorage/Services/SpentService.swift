@@ -13,18 +13,7 @@ enum ServiceError: Error {
     case UndefinedCategoryError
 }
 
-protocol SpentServiceProtocol {
-    func getCategories() throws -> [CategoryModel]
-    func addCategory(for category: CategoryModel) throws -> Void
-    func addSpent(for spent: SpentModel) throws -> Void
-    func getSpents(on date: Date) throws -> [SpentModel]
-    func getSpents(startDate: Date, endDate: Date) throws -> [SpentModel]
-
-    // TODO: will move to settings
-    func addDefaultCategories() -> Void
-}
-
-class SpentService: SpentServiceProtocol {
+class SpentService: ServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
     
@@ -35,6 +24,10 @@ class SpentService: SpentServiceProtocol {
             predicate: nil,
             sort: sort
         ) as? [CategoryEntity]
+        
+        if result?.isEmpty ?? true {
+            return try addDefaultCategories()
+        }
         
         return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
     }
@@ -99,22 +92,21 @@ extension SpentService {
         return entity
     }
     
-    func addDefaultCategories() {
-        let data: [CategoryModel] = [
-            CategoryModel(id: UUID(), name: "Авто"),
-            CategoryModel(id: UUID(), name: "Продукты"),
-            CategoryModel(id: UUID(), name: "Спортзал"),
-            CategoryModel(id: UUID(), name: "Курсы-Кружки"),
-            CategoryModel(id: UUID(), name: "Бары-Рестораны"),
-            CategoryModel(id: UUID(), name: "Такси"),
-            CategoryModel(id: UUID(), name: "Кофе"),
-            CategoryModel(id: UUID(), name: "Одежда"),
-            CategoryModel(id: UUID(), name: "Техника"),
-            CategoryModel(id: UUID(), name: "Мебель"),
-            CategoryModel(id: UUID(), name: "Стк"),
+    func addDefaultCategories() throws -> [CategoryModel] {
+        // TODO: move to config
+        let defaultNames = [
+            "Авто", "Продукты", "Спортзал", "Курсы-Кружки", "Бары-Рестораны", "Такси",
+            "Кофе", "Одежда", "Техника", "Мебель", "Стк", "ЖКХ"
         ]
         
-        data.forEach { dbManager.context.insert(categoryModelToEntity(category: $0)) }
-        try? dbManager.save()
+        var defaultCategories: [CategoryModel] = []
+        defaultNames.forEach { categoryName in
+            let model = CategoryModel(id: UUID(), name: categoryName)
+            dbManager.context.insert(categoryModelToEntity(category: model))
+            defaultCategories.append(model)
+        }
+        try dbManager.save()
+        
+        return defaultCategories
     }
 }

@@ -12,7 +12,7 @@ import LetterAvatarKit
 class StatisticCategoryCell: UITableViewCell {
     
     static let cellId = "CategoryCellId"
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 60
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

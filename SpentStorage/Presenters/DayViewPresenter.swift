@@ -20,7 +20,7 @@ protocol DayViewProtocol: AnyObject {
 }
 
 protocol DayViewPresenterProtocol {
-    init(view: DayViewProtocol, service: SpentServiceProtocol)
+    init(view: DayViewProtocol, service: ServiceProtocol)
     
     func fetch(on date: Date?) -> Void
     func onDayStepFetch(step: DayStepType) -> Void
@@ -29,11 +29,11 @@ protocol DayViewPresenterProtocol {
 class DayViewPresenter: DayViewPresenterProtocol {
     private weak var view: DayViewProtocol?
     
-    private let service: SpentServiceProtocol
+    private let service: ServiceProtocol
     private let defaultError = "Something went wrong"
     private var currentDate: Date
     
-    required init(view: DayViewProtocol, service: SpentServiceProtocol) {
+    required init(view: DayViewProtocol, service: ServiceProtocol) {
         self.view = view
         self.service = service
         currentDate = Date()

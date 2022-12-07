@@ -14,7 +14,7 @@ protocol SpentViewProtocol: AnyObject {
 }
 
 protocol SpentViewPresenterProtocol {
-    init(view: SpentViewProtocol, service: SpentServiceProtocol)
+    init(view: SpentViewProtocol, service: ServiceProtocol)
     
     func fetchCategories() -> Void
     func addSpent(price: Float, date: Date, type: CategoryModel) -> Void
@@ -23,10 +23,10 @@ protocol SpentViewPresenterProtocol {
 class SpentViewPresenter: SpentViewPresenterProtocol {
     private weak var view: SpentViewProtocol?
     
-    private let service: SpentServiceProtocol
+    private let service: ServiceProtocol!
     private let defaultError = "Something went wrong"
     
-    required init(view: SpentViewProtocol, service: SpentServiceProtocol) {
+    required init(view: SpentViewProtocol, service: ServiceProtocol) {
         self.service = service
         self.view = view
     }

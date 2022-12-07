@@ -9,7 +9,7 @@ import UIKit
 
 class DayViewController: UIViewController {
     
-    private let presenter = DayViewPresenter(service: SpentService())
+    private var presenter: DayViewPresenterProtocol!
     private var spents: [SpentModel] = []
     
     private let emptyView = EmptySpentsView()
@@ -21,7 +21,7 @@ class DayViewController: UIViewController {
         setupLayout()
         setupConstrains()
         
-        presenter.delegate = self
+        presenter = DayViewPresenter(view: self, service: SpentService())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,7 +51,6 @@ class DayViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.dataSource = self
-        tableView.delegate = self
     }
     
     private func setupConstrains() {
@@ -140,7 +139,7 @@ class DayViewController: UIViewController {
     private func onPressNavRightItem() {
         let spentVC = SpentViewController()
         spentVC.didDissmisController = { [weak self] in
-            self?.presenter.fetch()
+            self?.presenter.fetch(on: nil)
         }
         
         let nav = NavigationController(rootViewController: spentVC)
@@ -160,8 +159,8 @@ class DayViewController: UIViewController {
     }
 }
 
-// MARK: Presenter Delegate
-extension DayViewController: DayViewPresenterDelegate {
+// MARK: View Protocol
+extension DayViewController: DayViewProtocol {
     
     func presentSpents(data: [SpentModel]) {
         spents = data
@@ -191,7 +190,7 @@ extension DayViewController: DayViewPresenterDelegate {
 }
 
 // MARK: TableView Delegate
-extension DayViewController: UITableViewDataSource, UITableViewDelegate {
+extension DayViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SpentViewCell.cellId, for: indexPath) as! SpentViewCell

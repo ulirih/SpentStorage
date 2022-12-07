@@ -15,6 +15,7 @@ protocol SpentViewProtocol: AnyObject {
 
 protocol SpentViewPresenterProtocol {
     init(view: SpentViewProtocol, service: SpentServiceProtocol)
+    
     func fetchCategories() -> Void
     func addSpent(price: Float, date: Date, type: CategoryModel) -> Void
 }

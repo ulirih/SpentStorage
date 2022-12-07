@@ -11,6 +11,7 @@ import Charts
 class BarChartCell: UITableViewCell {
     
     static let cellId = "BarChartCellId"
+    static let cellHeight: CGFloat = 200
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

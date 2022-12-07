@@ -10,7 +10,7 @@ import Charts
 
 class StatisticsViewController: UIViewController, ChartViewDelegate {
     
-    private let presenter = StatisticViewPresenter(service: SpentService())
+    private var presenter: StatisticsPresenterViewProtocol!
     private var statisticsData: [StatisticType] = []
 
     override func viewDidLoad() {
@@ -20,7 +20,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         setupViews()
         setupConstraints()
         
-        presenter.delegate = self
+        presenter = StatisticViewPresenter(view: self, service: SpentService())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,8 +98,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     }
 }
 
-// MARK: Presenter Protocol
-extension StatisticsViewController: StatisticsViewPresenterProtocol {
+// MARK: View Protocol
+extension StatisticsViewController: StatisticsViewProtocol {
     func didLoadStatistic(statistic: [StatisticType]) {
         statisticsData = statistic
         tableView.reloadData()
@@ -147,10 +147,11 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // TODO: need refator
         switch statisticsData[indexPath.section] {
-        case .categories: return 60
-        case .chart: return 200
-        case .amount: return 100
+        case .categories: return StatisticCategoryCell.cellHeight
+        case .chart: return BarChartCell.cellHeight
+        case .amount: return TotalAmountCell.cellHeight
         }
     }
     
@@ -160,9 +161,9 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 class XAxisValueFormatter: AxisValueFormatter {
-    private let periodType: ChartPeriodType
+    private let periodType: StatisticPeriodType
     
-    init(periodType: ChartPeriodType) {
+    init(periodType: StatisticPeriodType) {
         self.periodType = periodType
     }
     

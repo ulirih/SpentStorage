@@ -9,6 +9,7 @@ import UIKit
 
 class TotalAmountCell: UITableViewCell {
     static let cellId = "TotalAmountCellId"
+    static let cellHeight: CGFloat = 100
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

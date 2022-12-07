@@ -8,7 +8,7 @@
 import Foundation
 import Charts
 
-enum ChartPeriodType {
+enum StatisticPeriodType {
     case year
     case month
     case week
@@ -39,30 +39,39 @@ enum StatisticType {
     case categories(items: [StatisticCategoryModel])
 }
 
-protocol StatisticsViewPresenterProtocol: AnyObject {
+protocol StatisticsViewProtocol: AnyObject {
     func didLoadStatistic(statistic: [StatisticType]) -> Void
     func showError(errorMessage: String) -> Void
 }
 
-class StatisticViewPresenter {
-    weak var delegate: StatisticsViewPresenterProtocol?
-    var selectedPeriod: ChartPeriodType = .week
+protocol StatisticsPresenterViewProtocol {
+    init(view: StatisticsViewProtocol, service: SpentServiceProtocol)
     
+    var selectedPeriod: StatisticPeriodType { get set }
+    func fetchData(for periodType: StatisticPeriodType) -> Void
+}
+
+class StatisticViewPresenter: StatisticsPresenterViewProtocol {
+    
+    var selectedPeriod: StatisticPeriodType = .week
+    
+    private weak var view: StatisticsViewProtocol?
     private let service: SpentServiceProtocol
     
-    init(service: SpentServiceProtocol) {
+    required init(view: StatisticsViewProtocol, service: SpentServiceProtocol) {
         self.service = service
+        self.view = view
     }
     
-    func fetchData(for periodType: ChartPeriodType) {
+    func fetchData(for periodType: StatisticPeriodType) {
         selectedPeriod = periodType
         let (startDate, endDate) = periodType.getDetesInterval()
         
         do {
             let spents = try service.getSpents(startDate: startDate, endDate: endDate)
-            delegate?.didLoadStatistic(statistic: createStatisticsData(spents))
+            view?.didLoadStatistic(statistic: createStatisticsData(spents))
         } catch let error {
-            delegate?.showError(errorMessage: error.localizedDescription)
+            view?.showError(errorMessage: error.localizedDescription)
         }
     }
     

@@ -7,26 +7,34 @@
 
 import Foundation
 
-protocol DayViewPresenterDelegate: AnyObject {
+enum DayStepType: Int {
+    case nextDay = 1
+    case previousDay = -1
+}
+
+protocol DayViewProtocol: AnyObject {
     func presentSpents(data: [SpentModel]) -> Void
     func presentSum(sum: Float) -> Void
     func presentDate(date: Date) -> Void
     func showError(errorMessage: String) -> Void
 }
 
-enum DayStepType: Int {
-    case nextDay = 1
-    case previousDay = -1
+protocol DayViewPresenterProtocol {
+    init(view: DayViewProtocol, service: SpentServiceProtocol)
+    
+    func fetch(on date: Date?) -> Void
+    func onDayStepFetch(step: DayStepType) -> Void
 }
 
-class DayViewPresenter {
-    weak var delegate: DayViewPresenterDelegate?
+class DayViewPresenter: DayViewPresenterProtocol {
+    private weak var view: DayViewProtocol?
     
     private let service: SpentServiceProtocol
     private let defaultError = "Something went wrong"
     private var currentDate: Date
     
-    init(service: SpentServiceProtocol) {
+    required init(view: DayViewProtocol, service: SpentServiceProtocol) {
+        self.view = view
         self.service = service
         currentDate = Date()
     }
@@ -36,11 +44,11 @@ class DayViewPresenter {
         do {
             let result = try service.getSpents(on: currentDate)
             
-            delegate?.presentSpents(data: result)
-            delegate?.presentSum(sum: getSum(for: result))
-            delegate?.presentDate(date: currentDate)
+            view?.presentSpents(data: result)
+            view?.presentSum(sum: getSum(for: result))
+            view?.presentDate(date: currentDate)
         } catch {
-            delegate?.showError(errorMessage: defaultError)
+            view?.showError(errorMessage: defaultError)
         }
     }
     

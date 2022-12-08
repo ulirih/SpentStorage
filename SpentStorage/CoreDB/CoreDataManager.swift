@@ -10,6 +10,7 @@ import CoreData
 
 class CoreDataManager {
     static let shared = CoreDataManager()
+    var context: NSManagedObjectContext
     
     private var container: NSPersistentContainer!
     
@@ -21,42 +22,35 @@ class CoreDataManager {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
-    }
-    
-    public var context: NSManagedObjectContext {
-        get {
-            return container.viewContext
-        }
+        context = container.newBackgroundContext()
     }
     
     func save() throws {
-        if container.viewContext.hasChanges {
-            try container.viewContext.save()
+        if context.hasChanges {
+            try context.save()
         }
     }
     
-    func getData(entityName: String) throws -> [NSManagedObject] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        let entities = try context.fetch(fetchRequest)
-        
-        return entities
-        
-    }
-    
-    func getData(entityName: String, predicate: NSPredicate) throws -> [NSManagedObject] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.predicate = predicate
-        let entities = try context.fetch(fetchRequest)
-        
-        return entities
-    }
-    
-    func getData(entityName: String, predicate: NSPredicate?, sort: [NSSortDescriptor]?) throws -> [NSManagedObject] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = sort
-        let entities = try context.fetch(fetchRequest)
-        
-        return entities
+    func getData(entityName: String,
+                 predicate: NSPredicate?,
+                 sort: [NSSortDescriptor]?,
+                 completion: @escaping (_ result: Result<[NSManagedObject], Error>) -> Void
+    ) {
+        context.perform {
+            do {
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+                fetchRequest.predicate = predicate
+                fetchRequest.sortDescriptors = sort
+                let entities = try self.context.fetch(fetchRequest)
+                
+                DispatchQueue.main.async {
+                    completion(.success(entities))
+                }
+            } catch let error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
     }
 }

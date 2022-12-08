@@ -68,8 +68,9 @@ class StatisticViewPresenter: StatisticsPresenterViewProtocol {
         let (startDate, endDate) = periodType.getDetesInterval()
         
         do {
-            let spents = try service.getSpents(startDate: startDate, endDate: endDate)
-            view?.didLoadStatistic(statistic: createStatisticsData(spents))
+            try service.getSpents(startDate: startDate, endDate: endDate) { result in
+                self.view?.didLoadStatistic(statistic: self.createStatisticsData(result))
+            }
         } catch let error {
             view?.showError(errorMessage: error.localizedDescription)
         }

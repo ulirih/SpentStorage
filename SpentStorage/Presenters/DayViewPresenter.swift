@@ -42,10 +42,10 @@ class DayViewPresenter: DayViewPresenterProtocol {
     func fetch(on date: Date? = nil) {
         currentDate = date ?? currentDate
         do {
-            let result = try service.getSpents(on: currentDate)
-            
-            view?.presentSpents(data: result)
-            view?.presentSum(sum: getSum(for: result))
+            try service.getSpents(on: currentDate) { result in
+                self.view?.presentSpents(data: result)
+                self.view?.presentSum(sum: self.getSum(for: result))
+            }
             view?.presentDate(date: currentDate)
         } catch {
             view?.showError(errorMessage: defaultError)

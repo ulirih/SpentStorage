@@ -17,19 +17,29 @@ class SpentService: ServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
     
-    func getCategories() throws -> [CategoryModel] {
+    func getCategories(completion: @escaping ([CategoryModel]) -> Void) throws {
         let sort = [NSSortDescriptor(key: "name", ascending: true)]
-        let result = try dbManager.getData(
+        dbManager.getData(
             entityName: String(describing: CategoryEntity.self),
             predicate: nil,
             sort: sort
-        ) as? [CategoryEntity]
-        
-        if result?.isEmpty ?? true {
-            return try addDefaultCategories()
+        ) { result in
+            switch result {
+            case .success(let items):
+                var categories: [CategoryModel] = []
+                if items.isEmpty {
+                    categories = try! self.addDefaultCategories()
+                } else {
+                    categories = items.map { item in
+                        let entity = item as! CategoryEntity
+                        return CategoryModel(id: entity.id, name: entity.name)
+                    }
+                }
+                completion(categories)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        return result?.map { CategoryModel(id: $0.id, name: $0.name) } ?? []
     }
     
     func addCategory(for category: CategoryModel) throws {
@@ -37,30 +47,44 @@ class SpentService: ServiceProtocol {
         try dbManager.save()
     }
     
-    func getSpents(on date: Date) throws -> [SpentModel] {
-        return try getSpents(startDate: date, endDate: date)
+    func getSpents(on date: Date, completion: @escaping ([SpentModel]) -> Void) throws {
+        try getSpents(startDate: date, endDate: date) { result in
+            completion(result)
+        }
     }
     
-    func getSpents(startDate: Date, endDate: Date) throws -> [SpentModel] {
+    func getSpents(startDate: Date, endDate: Date, completion: @escaping ([SpentModel]) -> Void) throws {
         let predicate = NSPredicate(
             format: "date >= %@ and date <= %@",
             Calendar.current.startOfDay(for: startDate) as CVarArg,
             Calendar.current.startOfDay(for: endDate).addingTimeInterval(86400.0) as CVarArg
         )
         
-        let result = try dbManager.getData(
+        dbManager.getData(
             entityName: String(describing: SpentEntity.self),
             predicate: predicate,
             sort: nil
-        ) as? [SpentEntity]
-        
-        return result?.map { SpentModel(id: $0.id, date: $0.date, price: $0.price, type: $0.type.toModel()) } ?? []
+        ) { result in
+            switch result {
+            case .success(let items):
+                var spents: [SpentModel] = []
+                items.forEach { item in
+                    let entity = item as! SpentEntity
+                    spents.append(SpentModel(id: entity.id, date: entity.date, price: entity.price, type: entity.type.toModel()))
+                }
+                completion(spents)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func addSpent(for spent: SpentModel) throws {
-        let entity = try spentModelToEntity(spent: spent)
-        dbManager.context.insert(entity)
-        try dbManager.save()
+        try spentModelToEntity(spent: spent) { entity in
+            self.dbManager.context.insert(entity)
+            try? self.dbManager.save()
+        }
     }
 }
 
@@ -73,23 +97,32 @@ extension SpentService {
         return category
     }
     
-    private func spentModelToEntity(spent model: SpentModel) throws -> SpentEntity {
+    private func spentModelToEntity(spent model: SpentModel, completion: @escaping (SpentEntity) -> Void) throws {
         let predicate = NSPredicate(format: "id == %@", model.type.id.uuidString)
-        let categories = try? dbManager.getData(
+        dbManager.getData(
             entityName: String(describing: CategoryEntity.self),
             predicate: predicate,
             sort: nil
-        ) as? [CategoryEntity]
-        
-        guard let category = categories?.first else { throw ServiceError.UndefinedCategoryError }
-        
-        let entity = SpentEntity(context: dbManager.context)
-        entity.id = model.id
-        entity.date = model.date
-        entity.price = model.price
-        entity.type = category
-        
-        return entity
+        ) { result in
+            switch result {
+            case .success(let items):
+                guard let category = items.first, category is CategoryEntity else {
+                    print("Error")
+                    return
+                }
+                
+                let entity = SpentEntity(context: self.dbManager.context)
+                entity.id = model.id
+                entity.date = model.date
+                entity.price = model.price
+                entity.type = category as! CategoryEntity
+                completion(entity)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
     }
     
     func addDefaultCategories() throws -> [CategoryModel] {

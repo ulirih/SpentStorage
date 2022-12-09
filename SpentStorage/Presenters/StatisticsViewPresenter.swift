@@ -52,11 +52,11 @@ protocol StatisticsPresenterViewProtocol {
 }
 
 class StatisticViewPresenter: StatisticsPresenterViewProtocol {
-    
     var selectedPeriod: StatisticPeriodType = .week
     
     private weak var view: StatisticsViewProtocol?
     private let service: ServiceProtocol
+    private let defaultError = "Something went wrong"
     
     required init(view: StatisticsViewProtocol, service: ServiceProtocol) {
         self.service = service
@@ -67,12 +67,13 @@ class StatisticViewPresenter: StatisticsPresenterViewProtocol {
         selectedPeriod = periodType
         let (startDate, endDate) = periodType.getDetesInterval()
         
-        do {
-            try service.getSpents(startDate: startDate, endDate: endDate) { result in
-                self.view?.didLoadStatistic(statistic: self.createStatisticsData(result))
+        service.getSpents(startDate: startDate, endDate: endDate) { result in
+            switch result {
+            case .success(let statistics):
+                self.view?.didLoadStatistic(statistic: self.createStatisticsData(statistics))
+            case .failure:
+                self.view?.showError(errorMessage: self.defaultError)
             }
-        } catch let error {
-            view?.showError(errorMessage: error.localizedDescription)
         }
     }
     

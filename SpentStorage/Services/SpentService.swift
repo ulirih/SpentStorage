@@ -8,16 +8,11 @@
 import Foundation
 import CoreData
 
-enum ServiceError: Error {
-    case DBError
-    case UndefinedCategoryError
-}
-
 class SpentService: ServiceProtocol {
     
     private var dbManager = CoreDataManager.shared
     
-    func getCategories(completion: @escaping ([CategoryModel]) -> Void) throws {
+    func getCategories(completion: @escaping (Result<[CategoryModel], ServiceError>) -> Void) {
         let sort = [NSSortDescriptor(key: "name", ascending: true)]
         dbManager.getData(
             entityName: String(describing: CategoryEntity.self),
@@ -35,9 +30,9 @@ class SpentService: ServiceProtocol {
                         return CategoryModel(id: entity.id, name: entity.name)
                     }
                 }
-                completion(categories)
-            case .failure(let error):
-                print(error.localizedDescription)
+                completion(.success(categories))
+            case .failure:
+                completion(.failure(.internalError))
             }
         }
     }
@@ -47,13 +42,13 @@ class SpentService: ServiceProtocol {
         try dbManager.save()
     }
     
-    func getSpents(on date: Date, completion: @escaping ([SpentModel]) -> Void) throws {
-        try getSpents(startDate: date, endDate: date) { result in
+    func getSpents(on date: Date, completion: @escaping (Result<[SpentModel], ServiceError>) -> Void) {
+        getSpents(startDate: date, endDate: date) { result in
             completion(result)
         }
     }
     
-    func getSpents(startDate: Date, endDate: Date, completion: @escaping ([SpentModel]) -> Void) throws {
+    func getSpents(startDate: Date, endDate: Date, completion: @escaping (Result<[SpentModel], ServiceError>) -> Void) {
         let predicate = NSPredicate(
             format: "date >= %@ and date <= %@",
             Calendar.current.startOfDay(for: startDate) as CVarArg,
@@ -72,10 +67,10 @@ class SpentService: ServiceProtocol {
                     let entity = item as! SpentEntity
                     spents.append(SpentModel(id: entity.id, date: entity.date, price: entity.price, type: entity.type.toModel()))
                 }
-                completion(spents)
+                completion(.success(spents))
                 
-            case .failure(let error):
-                print(error.localizedDescription)
+            case .failure:
+                completion(.failure(.internalError))
             }
         }
     }

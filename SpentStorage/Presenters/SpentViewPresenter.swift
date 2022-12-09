@@ -32,12 +32,13 @@ class SpentViewPresenter: SpentViewPresenterProtocol {
     }
     
     func fetchCategories() {
-        do {
-            try service.getCategories { result in
-                self.view?.presentCategories(categories: result)
+        service.getCategories { result in
+            switch result {
+            case .success(let items):
+                self.view?.presentCategories(categories: items)
+            case .failure:
+                self.view?.showError(errorMessage: self.defaultError)
             }
-        } catch {
-            view?.showError(errorMessage: defaultError)
         }
     }
     

@@ -20,16 +20,16 @@ class SpentService: ServiceProtocol {
             sort: sort
         ) { result in
             switch result {
-            case .success(let items):
+            case .success(var items):
                 var categories: [CategoryModel] = []
                 if items.isEmpty {
-                    categories = try! self.addDefaultCategories()
-                } else {
-                    categories = items.map { item in
-                        let entity = item as! CategoryEntity
-                        return CategoryModel(id: entity.id, name: entity.name)
-                    }
+                    items = try! self.addDefaultCategories()
                 }
+                categories = items.map { item in
+                    let entity = item as! CategoryEntity
+                    return CategoryModel(id: entity.id, name: entity.name)
+                }
+                
                 completion(.success(categories))
             case .failure:
                 completion(.failure(.internalError))
@@ -38,8 +38,7 @@ class SpentService: ServiceProtocol {
     }
     
     func addCategory(for category: CategoryModel) throws {
-        dbManager.context.insert(categoryModelToEntity(category: category))
-        try dbManager.save()
+        try dbManager.insert([categoryModelToEntity(category: category)])
     }
     
     func getSpents(on date: Date, completion: @escaping (Result<[SpentModel], ServiceError>) -> Void) {
@@ -77,8 +76,7 @@ class SpentService: ServiceProtocol {
     
     func addSpent(for spent: SpentModel) throws {
         try spentModelToEntity(spent: spent) { entity in
-            self.dbManager.context.insert(entity)
-            try? self.dbManager.save()
+            try? self.dbManager.insert([entity])
         }
     }
 }
@@ -120,20 +118,21 @@ extension SpentService {
         }
     }
     
-    func addDefaultCategories() throws -> [CategoryModel] {
+    func addDefaultCategories() throws -> [CategoryEntity] {
         // TODO: move to config
         let defaultNames = [
             "Авто", "Продукты", "Спортзал", "Курсы-Кружки", "Бары-Рестораны", "Такси",
             "Кофе", "Одежда", "Техника", "Мебель", "Стк", "ЖКХ"
         ]
         
-        var defaultCategories: [CategoryModel] = []
+        var defaultCategories: [CategoryEntity] = []
         defaultNames.forEach { categoryName in
-            let model = CategoryModel(id: UUID(), name: categoryName)
-            dbManager.context.insert(categoryModelToEntity(category: model))
-            defaultCategories.append(model)
+            let category = CategoryEntity(context: dbManager.context)
+            category.id = UUID()
+            category.name = categoryName
+            defaultCategories.append(category)
         }
-        try dbManager.save()
+        try dbManager.insert(defaultCategories)
         
         return defaultCategories
     }

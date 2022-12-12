@@ -31,6 +31,13 @@ class CoreDataManager {
         }
     }
     
+    func insert(_ objects: [NSManagedObject]) throws {
+        objects.forEach { object in
+            context.insert(object)
+        }
+        try context.save()
+    }
+    
     func getData(entityName: String,
                  predicate: NSPredicate?,
                  sort: [NSSortDescriptor]?,

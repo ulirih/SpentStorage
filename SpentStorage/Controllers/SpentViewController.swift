@@ -95,6 +95,14 @@ class SpentViewController: UIViewController {
         )
     }
     
+    @objc
+    private func onPressDoneToolBar() {
+        if priceTextField.text?.isEmpty ?? true {
+            return
+        }
+        priceTextField.resignFirstResponder()
+    }
+    
     // MARK: views
     private let priceTextField: UITextField = {
         let field = UITextField()
@@ -103,6 +111,15 @@ class SpentViewController: UIViewController {
         field.translatesAutoresizingMaskIntoConstraints = false
         field.borderStyle = .roundedRect
         field.keyboardType = .decimalPad
+        
+        let barDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPressDoneToolBar))
+        
+        let bar = UIToolbar()
+        bar.sizeToFit()
+        bar.isUserInteractionEnabled = true
+        bar.setItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil), barDoneButton], animated: true)
+        
+        field.inputAccessoryView = bar
         
         return field
     }()

@@ -32,9 +32,7 @@ class CoreDataManager {
     }
     
     func insert(_ objects: [NSManagedObject]) throws {
-        objects.forEach { object in
-            context.insert(object)
-        }
+        objects.forEach { context.insert($0) }
         try context.save()
     }
     

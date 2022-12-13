@@ -21,11 +21,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         setupConstraints()
         
         presenter = StatisticViewPresenter(view: self, service: SpentService())
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         presenter.fetchData(for: .week)
     }
     
